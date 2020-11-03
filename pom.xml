@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>codecamp.bug.wars</groupId>
-	<artifactId>bug-wars-game-logic</artifactId>
+	<artifactId>bug-wars-game-engine</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>bug-wars-game-logic</name>
 	<description>Game Engine for Bug Wars</description>

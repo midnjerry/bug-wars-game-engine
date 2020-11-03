@@ -9,5 +9,4 @@ public class BugWarsGameLogicApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BugWarsGameLogicApplication.class, args);
 	}
-
 }
