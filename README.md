@@ -52,11 +52,12 @@ _ _ _ _ 2
 }
 ```
 ### Game
-The Game model has all starting information for the game to be executing.  This includes:
+The Game model has all starting information for the game to be executed.  This includes:
 * Map Terrain
 * Starting locations of bugs (Spawn Points)
-* Object Code used to execute the given bug
 * Starting locations of food
+* Object Code used to execute the given bug
+
 ```json
 {
     "map": {
@@ -73,32 +74,81 @@ The Game model has all starting information for the game to be executing.  This 
             "team": 2,
             "code": "20 4 5 2 3 5 5 2 1 3 5 21 4 5 2 4"
         }
+     "ticks": 300
     ]
 }
 ```
 
+### GameState
+```json
+{
+   "tick": 
+    "food": [
+        {
+            "x": 2,
+            "y": 2
+        }
+        "bug": {
+          "team" : 1,
+          "direction" : "NORTH, EAST, SOUTH, WEST",
+          "x" : 3,
+          "y" : 4,
+          "command" : "attack, noop, turnRight, ...",
+          "dying": "true/false"
+        }
+}
+```
+
 ## POST /games
-Launch a new game and get an array of GameState.
+Launch a new game and get an array of 300 GameStates representing 5 minutes of gameplay.
 
 ### Request Body
 ```json
 {
-"map": {
-board: [],
-[],
-[],
-[],
-[]
+   "game": {"(see above)"}
 }
+```
+### Response Body for a Draw
+```json
+{
+  "winners": [1,2]
+  "result": "DRAW"
+  "gamestates": ["(see above)"],
 }
 ```
 
+### Response Body for a Victory
+```json
+{
+  "winner": [1]
+  "result": "VICTORY"
+  "gamestates": ["(see above)"],
+}
+```
 
 ## GET /games/{id}
 View a replay of game with `id`
 
+### Response Body for a Draw
+```json
+{
+  "winners": [1,2]
+  "result": "DRAW"
+  "gamestates": ["(see above)"],
+}
+```
 
-
+### Response Body for a Victory
+```json
+{
+  "winner": [1]
+  "result": "VICTORY"
+  "gamestates": ["(see above)"],
+}
+```
 
 ## GET /games
 Get a list of Played Games
+```json
+["(Array of Games -- see above)"]
+```
