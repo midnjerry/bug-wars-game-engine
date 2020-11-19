@@ -8,4 +8,5 @@ public class Map {
     List<Spawn> spawns;
     List<Food> foods;
 
+
 }
