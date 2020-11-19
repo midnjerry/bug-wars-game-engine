@@ -141,39 +141,43 @@ Launch a new game and get an array of 300 GameStates representing 5 minutes of g
 ### Response Body for a Draw
 ```json
 {
-  "winners": [1,2]
-  "result": "DRAW"
-  "gamestates": ["(see above)"],
+  "game": {"(see above)"},
+  "winners": [1,2],
+  "result": "DRAW",
+  "gamestates": ["(see above)"]
 }
 ```
 
 ### Response Body for a Victory
 ```json
 {
-  "winner": [1]
-  "result": "VICTORY"
-  "gamestates": ["(see above)"],
+  "game": {"(see above)"},
+  "winner": [1],
+  "result": "VICTORY",
+  "gamestates": ["(see above)"]
 }
 ```
 
-## GET /games/{id}
+## GET /games/{id}/replay
 View a replay of game with `id`
 
 ### Response Body for a Draw
 ```json
 {
-  "winners": [1,2]
-  "result": "DRAW"
-  "gamestates": ["(see above)"],
+  "game": {"(see above)"},
+  "winners": [1,2],
+  "result": "DRAW",
+  "gamestates": ["(see above)"]
 }
 ```
 
 ### Response Body for a Victory
 ```json
 {
-  "winner": [1]
-  "result": "VICTORY"
-  "gamestates": ["(see above)"],
+  "game": {"(see above)"},
+  "winner": [1],
+  "result": "VICTORY",
+  "gamestates": ["(see above)"]
 }
 ```
 
