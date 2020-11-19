@@ -77,10 +77,12 @@ The Game model has all starting information for the game to be executed.  This i
     "bugs": [
         {
             "team": 1,
+            "name": "AI NAME",
             "code": "23 0 1 3 5 0 3 2 4 21 3 4 5 1 2 3 8"
         },
         {
             "team": 2,
+            "name": "Bug Slayer",
             "code": "20 4 5 2 3 5 5 2 1 3 5 21 4 5 2 4"
         }
      "ticks": 300,
@@ -92,20 +94,21 @@ The Game model has all starting information for the game to be executed.  This i
 ### GameState
 ```json
 {
-   "tick": 
+    "tick": 1,
     "food": [
         {
             "x": 2,
             "y": 2
         }
-        "bug": {
-          "team" : 1,
-          "direction" : "NORTH, EAST, SOUTH, WEST",
-          "x" : 3,
-          "y" : 4,
-          "command" : "attack, noop, turnRight, ...",
-          "dying": "true/false"
-        }
+    ],
+    "bug": {
+        "team": 1,
+        "direction": "NORTH, EAST, SOUTH, WEST",
+        "x": 3,
+        "y": 4,
+        "command": "attack, noop, turnRight, ...",
+        "dying": "true/false"
+    }
 }
 ```
 
@@ -118,6 +121,7 @@ Launch a new game and get an array of 300 GameStates representing 5 minutes of g
    "game": {"(see above)"}
 }
 ```
+
 ### Response Body for a Draw
 ```json
 {
