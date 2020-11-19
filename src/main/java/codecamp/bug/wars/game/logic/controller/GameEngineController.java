@@ -30,7 +30,7 @@ public class GameEngineController {
         try{
 
             GameResult result = gameEngineService.saveGame(game);
-            return ResponseEntity.ok(result);
+            return new ResponseEntity(new GameResult(), HttpStatus.OK);
 
         } catch (InvalidInputException e) {
 
