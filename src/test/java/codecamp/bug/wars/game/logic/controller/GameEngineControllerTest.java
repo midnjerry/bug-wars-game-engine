@@ -2,6 +2,7 @@ package codecamp.bug.wars.game.logic.controller;
 
 import codecamp.bug.wars.game.logic.exceptions.InvalidInputException;
 import codecamp.bug.wars.game.logic.models.*;
+import codecamp.bug.wars.game.logic.service.BugRunner;
 import codecamp.bug.wars.game.logic.service.GameEngineService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,12 +19,16 @@ class GameEngineControllerTest {
 
     private GameEngineService mockGameEngineService;
     private GameEngineController gameEngineController;
+    private BugRunner gameRunner;
 
     @BeforeEach
     public void setup() {
+
+        gameRunner = Mockito.mock(BugRunner.class);
+
         mockGameEngineService = Mockito.mock(GameEngineService.class);
 
-        gameEngineController = new GameEngineController(mockGameEngineService);
+        gameEngineController = new GameEngineController(mockGameEngineService, gameRunner);
     }
 
     @Test
@@ -46,47 +51,77 @@ class GameEngineControllerTest {
     @Test
     public void createGame_shouldReturnGameInputAndOkHttpStatus() {
         // arrange
-//        Game postGameInput = new Game();
-//      game object
-//        MapSpace[][] rows = new MapSpace[5][5];
-        MapSpace[][] rows = new MapSpace {
-            { "OPEN", "OPEN", "OPEN", "OPEN", "OPEN"},
-            { "OPEN", "WALL", "OPEN", "WALL", "OPEN"},
-            { "OPEN", "OPEN", "OPEN", "OPEN", "OPEN"},
-            {"OPEN", "WALL", "OPEN", "WALL", "OPEN"},
-            {"OPEN", "OPEN", "OPEN", "OPEN", "OPEN"}
-        }
+        MapSpace[][] rows =  {
+            { MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN,  MapSpace.OPEN},
+            { MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN,  MapSpace.OPEN},
+            { MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN,  MapSpace.OPEN},
+            { MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN,  MapSpace.OPEN},
+            { MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN,  MapSpace.OPEN}
+        };
+
         List<Spawn> spawns = new ArrayList<>();
         spawns.add(new Spawn(1, 0, 1));
         List<Food> food = new ArrayList<>();
         food.add(new Food(1, 1));
         Map map = new Map(rows, spawns, food);
-//        List<Food> mapFood = map.getFoods();
-//        MapSpace [][] mapRows = map.getRows();
-//        List<Spawn> mapSpawns = map.getSpawns();
 
-//        bug object
         List<Bug> bugs = new ArrayList<>();
         Integer[] code = {1, 1, 1, 1, 1, 1, 1, 1};
         bugs.add(new Bug(1, code));
 
-
         BugResponse bugResponse = new BugResponse(2, Direction.NORTH, 3, 4, "attack", false);
         GameState gameStateTest = new GameState(1, bugResponse);
-        Game postGameInput = new Game(map, bugs, 1, 1L);
+        Game postBodyInput = new Game(map, bugs, 1, null);
         Integer[] winners = {1, 2};
         GameState [] gameStateArray = {gameStateTest};
-//        Game savedGame = new Game(map, bugs, 1, 1L);
-        Game savedGame = new Game(map,bugs  , 1, 1L);
         GameResult expected = new GameResult(winners , "winner", gameStateArray);
-//        Mockito.when(mockAIService.saveAI(Mockito.any())).thenReturn(savedScript);
-        Mockito.when(mockGameEngineService.saveGame(Mockito.any())).thenReturn(savedGame);
+        ResponseEntity<GameResult> expectedResponse = new ResponseEntity(expected, HttpStatus.OK);
+        Mockito.when(mockGameEngineService.saveGame(Mockito.any())).thenReturn(expected);
+
 //        Act
-        ResponseEntity<GameResult> expectedResponse = new ResponseEntity(new GameResult(), HttpStatus.OK);
+        ResponseEntity<GameResult> response = gameEngineController.createGame(postBodyInput);
 
-        ResponseEntity<GameResult> response = gameEngineController.createGame(postGameInput);
-
+//        assert
         assertEquals(expectedResponse, response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
+
+    @Test
+    public void getGameReplay_shouldGetGameReplayAndOkHttpStatus() {
+
+        //arrange
+        MapSpace[][] rows =  {
+                { MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN,  MapSpace.OPEN},
+                { MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN,  MapSpace.OPEN},
+                { MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN,  MapSpace.OPEN},
+                { MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN,  MapSpace.OPEN},
+                { MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN,  MapSpace.OPEN}
+        };
+
+        List<Spawn> spawns = new ArrayList<>();
+        spawns.add(new Spawn(1, 0, 1));
+        List<Food> food = new ArrayList<>();
+        food.add(new Food(1, 1));
+        Map map = new Map(rows, spawns, food);
+
+        List<Bug> bugs = new ArrayList<>();
+        Integer[] code = {1, 1, 1, 1, 1, 1, 1, 1};
+        bugs.add(new Bug(1, code));
+
+        BugResponse bugResponse = new BugResponse(2, Direction.NORTH, 3, 4, "attack", false);
+        GameState gameStateTest = new GameState(1, bugResponse);
+        Game postBodyInput = new Game(map, bugs, 1, null);
+        Integer[] winners = {1, 2};
+
+        GameState [] gameStateArray = {gameStateTest};
+        GameResult expected = new GameResult(winners , "winner", gameStateArray);
+        ResponseEntity<GameResult> expectedResponse = new ResponseEntity(expected, HttpStatus.OK);
+        Mockito.when(mockGameEngineService.getGameById(Mockito.any())).thenReturn(expected);
+
+//        act
+        ResponseEntity<GameResult> response = gameEngineController.createGame(postBodyInput);
+
+
+    }
+
 }
