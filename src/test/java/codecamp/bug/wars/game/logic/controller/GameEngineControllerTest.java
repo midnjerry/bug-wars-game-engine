@@ -1,5 +1,6 @@
 package codecamp.bug.wars.game.logic.controller;
 
+import codecamp.bug.wars.game.logic.exceptions.GameNotFoundException;
 import codecamp.bug.wars.game.logic.exceptions.InvalidInputException;
 import codecamp.bug.wars.game.logic.models.*;
 import codecamp.bug.wars.game.logic.service.BugRunner;
@@ -129,4 +130,17 @@ class GameEngineControllerTest {
 
     }
 
+    @Test
+    public void getGameReplay_shouldReturn404IfGameResultThrowsIdNotFound(){
+
+        ResponseEntity<GameResult> expected = new ResponseEntity(new GameResult(), HttpStatus.NOT_FOUND);
+        Mockito.when(mockGameEngineService.getGameById(Mockito.any()))
+                .thenThrow(new GameNotFoundException("Game ID does not exist"));
+
+        ResponseEntity<GameResult> response = gameEngineController.getGameReplay(1l);
+
+        assertEquals(expected, response);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+
+    }
 }
