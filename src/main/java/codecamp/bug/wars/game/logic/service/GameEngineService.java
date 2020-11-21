@@ -15,7 +15,7 @@ public class GameEngineService {
 
     }
 
-    public GameResult getGameById(Long id) {
+    public Game getGameById(Long id) {
 
         return null;
 

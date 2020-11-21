@@ -114,13 +114,18 @@ class GameEngineControllerTest {
         Integer[] winners = {1, 2};
 
         GameState [] gameStateArray = {gameStateTest};
-        GameResult expected = new GameResult(winners , "winner", gameStateArray);
-        ResponseEntity<GameResult> expectedResponse = new ResponseEntity(expected, HttpStatus.OK);
+        Game expected = new Game(map, bugs, 1, null);
+        GameResult result = new GameResult(winners , "winner", gameStateArray);
+        ResponseEntity<GameResult> expectedResponse = new ResponseEntity(result, HttpStatus.OK);
         Mockito.when(mockGameEngineService.getGameById(Mockito.any())).thenReturn(expected);
+        Mockito.when(gameRunner.getGameResult(expected)).thenReturn(result);
 
 //        act
-        ResponseEntity<GameResult> response = gameEngineController.createGame(postBodyInput);
+        ResponseEntity<GameResult> response = gameEngineController.getGameReplay(1L);
 
+//        assert
+        assertEquals(expectedResponse, response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
 
     }
 

@@ -47,8 +47,9 @@ public class GameEngineController {
     public ResponseEntity<GameResult> getGameReplay(@PathVariable Long id) {
 
         try{
-            GameResult retrieve = gameEngineService.getGameById(id);
-            return new ResponseEntity(retrieve, HttpStatus.OK);
+            Game retrieve = gameEngineService.getGameById(id);
+            GameResult result = gameRunner.getGameResult(retrieve);
+            return new ResponseEntity(result, HttpStatus.OK);
 
         } catch (GameNotFoundException e) {
 
