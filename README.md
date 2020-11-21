@@ -161,6 +161,9 @@ Launch a new game and get an array of 300 GameStates representing 5 minutes of g
 ## GET /games/{id}/replay
 View a replay of game with `id`
 
+Success- 200
+Invalid ID- 404
+
 ### Response Body for a Draw
 ```json
 {
