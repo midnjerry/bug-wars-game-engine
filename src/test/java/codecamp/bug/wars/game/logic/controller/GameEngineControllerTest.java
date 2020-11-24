@@ -6,6 +6,7 @@ import codecamp.bug.wars.game.logic.models.*;
 import codecamp.bug.wars.game.logic.service.GameEngineService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -124,5 +125,35 @@ class GameEngineControllerTest {
         //assert
         assertEquals(new GameResult(), response.getBody());
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    public void getAllGames_shouldReturnEmptyListIfEmpty(){
+        // arrange
+        List<Game> expected = new ArrayList<>();
+        Mockito.when(mockGameEngineService.getAllGames()).thenReturn(expected);
+
+        // act
+        ResponseEntity<List<Game>> response = gameEngineController.getAllGames();
+
+        // assert
+        assertEquals(expected, response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void getAllGames_shouldReturnListOfGames(){
+        // arrange
+        List<Game> expected = new ArrayList<>();
+        expected.add(sampleGame);
+        expected.add(sampleGame);
+        Mockito.when(mockGameEngineService.getAllGames()).thenReturn(expected);
+
+        // act
+        ResponseEntity<List<Game>> response = gameEngineController.getAllGames();
+
+        // assert
+        assertEquals(expected, response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 }
