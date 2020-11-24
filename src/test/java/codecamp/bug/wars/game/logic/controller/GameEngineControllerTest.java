@@ -3,7 +3,6 @@ package codecamp.bug.wars.game.logic.controller;
 import codecamp.bug.wars.game.logic.exceptions.GameNotFoundException;
 import codecamp.bug.wars.game.logic.exceptions.InvalidInputException;
 import codecamp.bug.wars.game.logic.models.*;
-import codecamp.bug.wars.game.logic.service.BugRunner;
 import codecamp.bug.wars.game.logic.service.GameEngineService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,16 +20,36 @@ class GameEngineControllerTest {
 
     private GameEngineService mockGameEngineService;
     private GameEngineController gameEngineController;
-    private BugRunner gameRunner;
+    private Game sampleGame;
+    private GameResult sampleGameResult;
 
     @BeforeEach
     public void setup() {
-
-        gameRunner = Mockito.mock(BugRunner.class);
-
         mockGameEngineService = Mockito.mock(GameEngineService.class);
+        gameEngineController = new GameEngineController(mockGameEngineService);
 
-        gameEngineController = new GameEngineController(mockGameEngineService, gameRunner);
+        MapSpace[][] rows = {
+                {MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN},
+                {MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN},
+                {MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN},
+                {MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN},
+                {MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN}
+        };
+
+        List<Spawn> spawns = Arrays.asList(new Spawn(1, 0, 1));
+        List<Food> food = Arrays.asList(new Food(1, 1));
+        Map map = new Map(rows, spawns, food);
+        List<Integer> code = Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1);
+        List<Bug> bugs = Arrays.asList(new Bug(1, code));
+        BugResponse bugResponse = new BugResponse(2, Direction.NORTH, 3, 4, "attack", false);
+        GameState gameStateTest = new GameState(1, bugResponse);
+        List<Integer> winners = Arrays.asList(1, 2);
+
+        List<GameState> gameStateArray = Arrays.asList(gameStateTest);
+        sampleGame = new Game(map, bugs, 1, null);
+        sampleGameResult = new GameResult(winners, "winner", gameStateArray);
+
+
     }
 
     @Test
@@ -52,95 +72,57 @@ class GameEngineControllerTest {
     @Test
     public void createGame_shouldReturnGameInputAndOkHttpStatus() {
         // arrange
-        MapSpace[][] rows =  {
-            { MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN,  MapSpace.OPEN},
-            { MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN,  MapSpace.OPEN},
-            { MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN,  MapSpace.OPEN},
-            { MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN,  MapSpace.OPEN},
-            { MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN,  MapSpace.OPEN}
-        };
+        ResponseEntity<GameResult> expectedResponse = new ResponseEntity(sampleGameResult, HttpStatus.OK);
+        Mockito.when(mockGameEngineService.saveGame(Mockito.any())).thenReturn(sampleGameResult);
 
-        List<Spawn> spawns = new ArrayList<>();
-        spawns.add(new Spawn(1, 0, 1));
-        List<Food> food = new ArrayList<>();
-        food.add(new Food(1, 1));
-        Map map = new Map(rows, spawns, food);
+        // act
+        ResponseEntity<GameResult> response = gameEngineController.createGame(sampleGame);
 
-        List<Bug> bugs = new ArrayList<>();
-        Integer[] code = {1, 1, 1, 1, 1, 1, 1, 1};
-        bugs.add(new Bug(1, code));
-
-        BugResponse bugResponse = new BugResponse(2, Direction.NORTH, 3, 4, "attack", false);
-        GameState gameStateTest = new GameState(1, bugResponse);
-        Game postBodyInput = new Game(map, bugs, 1, null);
-        Integer[] winners = {1, 2};
-        GameState [] gameStateArray = {gameStateTest};
-        GameResult expected = new GameResult(winners , "winner", gameStateArray);
-        ResponseEntity<GameResult> expectedResponse = new ResponseEntity(expected, HttpStatus.OK);
-        Mockito.when(mockGameEngineService.saveGame(Mockito.any())).thenReturn(expected);
-
-//        Act
-        ResponseEntity<GameResult> response = gameEngineController.createGame(postBodyInput);
-
-//        assert
+        // assert
         assertEquals(expectedResponse, response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     public void getGameReplay_shouldGetGameReplayAndOkHttpStatus() {
-
         //arrange
-        MapSpace[][] rows =  {
-                { MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN,  MapSpace.OPEN},
-                { MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN,  MapSpace.OPEN},
-                { MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN,  MapSpace.OPEN},
-                { MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN,  MapSpace.OPEN},
-                { MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN,  MapSpace.OPEN}
-        };
+        ResponseEntity<GameResult> expectedResponse = new ResponseEntity(sampleGameResult, HttpStatus.OK);
+        Mockito.when(mockGameEngineService.getReplay(1L)).thenReturn(sampleGameResult);
 
-        List<Spawn> spawns = new ArrayList<>();
-        spawns.add(new Spawn(1, 0, 1));
-        List<Food> food = new ArrayList<>();
-        food.add(new Food(1, 1));
-        Map map = new Map(rows, spawns, food);
-
-        List<Bug> bugs = new ArrayList<>();
-        Integer[] code = {1, 1, 1, 1, 1, 1, 1, 1};
-        bugs.add(new Bug(1, code));
-
-        BugResponse bugResponse = new BugResponse(2, Direction.NORTH, 3, 4, "attack", false);
-        GameState gameStateTest = new GameState(1, bugResponse);
-        Game postBodyInput = new Game(map, bugs, 1, null);
-        Integer[] winners = {1, 2};
-
-        GameState [] gameStateArray = {gameStateTest};
-        Game expected = new Game(map, bugs, 1, null);
-        GameResult result = new GameResult(winners , "winner", gameStateArray);
-        ResponseEntity<GameResult> expectedResponse = new ResponseEntity(result, HttpStatus.OK);
-        Mockito.when(mockGameEngineService.getGameById(Mockito.any())).thenReturn(expected);
-        Mockito.when(gameRunner.getGameResult(expected)).thenReturn(result);
-
-//        act
+        // act
         ResponseEntity<GameResult> response = gameEngineController.getGameReplay(1L);
 
-//        assert
+        // assert
         assertEquals(expectedResponse, response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
     }
 
     @Test
-    public void getGameReplay_shouldReturn404IfGameResultThrowsIdNotFound(){
-
-        ResponseEntity<GameResult> expected = new ResponseEntity(new GameResult(), HttpStatus.NOT_FOUND);
-        Mockito.when(mockGameEngineService.getGameById(Mockito.any()))
+    public void getGameReplay_shouldReturn404IfGameResultDoesNotExist() {
+        // arrange
+        Mockito.when(mockGameEngineService.getReplay(1l))
                 .thenThrow(new GameNotFoundException("Game ID does not exist"));
 
+        //act
         ResponseEntity<GameResult> response = gameEngineController.getGameReplay(1l);
 
-        assertEquals(expected, response);
+        //assert
+        assertEquals(new GameResult(), response.getBody());
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
 
+    @Test
+    public void getGameReplay_shouldReturn404IfInputIsNull() {
+        // arrange
+        Mockito.when(mockGameEngineService.getReplay(null))
+                .thenThrow(new GameNotFoundException("Game ID does not exist"));
+
+        //act
+        ResponseEntity<GameResult> response = gameEngineController.getGameReplay(null);
+
+        //assert
+        assertEquals(new GameResult(), response.getBody());
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 }

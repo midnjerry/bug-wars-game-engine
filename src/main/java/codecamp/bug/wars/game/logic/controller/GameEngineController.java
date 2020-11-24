@@ -18,20 +18,15 @@ import java.util.List;
 public class GameEngineController {
 
     private GameEngineService gameEngineService;
-    private BugRunner gameRunner;
 
-    public GameEngineController(GameEngineService service, BugRunner runner) {
-
+    public GameEngineController(GameEngineService service) {
         gameEngineService = service;
-        gameRunner = runner;
-
     }
 
     @PostMapping("/games")
     public ResponseEntity<GameResult> createGame(@RequestBody Game game) {
 
-        try{
-
+        try {
             GameResult result = gameEngineService.saveGame(game);
             return new ResponseEntity(result, HttpStatus.OK);
 
@@ -45,18 +40,12 @@ public class GameEngineController {
 
     @GetMapping("/games/{id}/replay")
     public ResponseEntity<GameResult> getGameReplay(@PathVariable Long id) {
-
-        try{
-            Game retrieve = gameEngineService.getGameById(id);
-            GameResult result = gameRunner.getGameResult(retrieve);
+        try {
+            GameResult result = gameEngineService.getReplay(id);
             return new ResponseEntity(result, HttpStatus.OK);
-
         } catch (GameNotFoundException e) {
-
             return new ResponseEntity(new GameResult(), HttpStatus.NOT_FOUND);
-
         }
-
     }
 
 }
