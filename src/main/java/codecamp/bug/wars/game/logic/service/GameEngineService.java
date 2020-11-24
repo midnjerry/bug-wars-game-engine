@@ -2,6 +2,7 @@ package codecamp.bug.wars.game.logic.service;
 
 import codecamp.bug.wars.game.logic.models.Game;
 import codecamp.bug.wars.game.logic.models.GameResult;
+import codecamp.bug.wars.game.logic.repository.GameEngineRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,12 @@ import java.util.List;
 
 @Service
 public class GameEngineService {
+
+    private final GameEngineRepository gameEngineRepository;
+
+    public GameEngineService(GameEngineRepository gameEngineRepository){
+        this.gameEngineRepository = gameEngineRepository;
+    }
 
     public GameResult saveGame(Game game) {
 
