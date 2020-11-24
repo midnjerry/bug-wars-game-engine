@@ -87,7 +87,7 @@ class GameEngineControllerTest {
     public void getGameReplay_shouldGetGameReplayAndOkHttpStatus() {
         //arrange
         ResponseEntity<GameResult> expectedResponse = new ResponseEntity(sampleGameResult, HttpStatus.OK);
-        Mockito.when(mockGameEngineService.getGameById(Mockito.any())).thenReturn(sampleGame);
+        Mockito.when(mockGameEngineService.getReplay(1L)).thenReturn(sampleGameResult);
 
         // act
         ResponseEntity<GameResult> response = gameEngineController.getGameReplay(1L);
