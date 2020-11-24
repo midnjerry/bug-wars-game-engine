@@ -23,6 +23,11 @@ public class GameEngineController {
         gameEngineService = service;
     }
 
+    @GetMapping("/games")
+    public ResponseEntity<List<Game>> getAllGames() {
+        return ResponseEntity.ok(gameEngineService.getAllGames());
+    }
+
     @PostMapping("/games")
     public ResponseEntity<GameResult> createGame(@RequestBody Game game) {
 

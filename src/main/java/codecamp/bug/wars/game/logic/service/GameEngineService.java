@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class GameEngineService {
 
@@ -26,5 +28,11 @@ public class GameEngineService {
     public GameResult getReplay(Long id){
         return null;
     }
+
+
+    public List<Game> getAllGames() {
+        return null;
+    }
+
 
 }
