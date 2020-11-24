@@ -38,7 +38,7 @@ public class GameEngineService {
 
 
     public List<Game> getAllGames() {
-        return null;
+        return gameEngineRepository.findAll();
     }
 
 

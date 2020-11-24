@@ -5,6 +5,7 @@ import codecamp.bug.wars.game.logic.repository.GameEngineRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -51,6 +52,13 @@ public class GameEngineServiceTest {
                 sampleGame,
                 sampleGame
         );
-    Mockito.when(GameEngineRepository.findAllGames()).thenReturn(expected);
+    Mockito.when(gameEngineMockRepository.findAll()).thenReturn(expected);
+
+//    Act
+        List<Game> result = gameEngineService.getAllGames();
+
+//        Assert
+        assertEquals(expected, result);
+        Mockito.verify(gameEngineMockRepository).findAll();
     }
 }
