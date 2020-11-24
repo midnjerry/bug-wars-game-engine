@@ -5,8 +5,10 @@ import codecamp.bug.wars.game.logic.models.GameResult;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@NoArgsConstructor
+@Service
 public class GameEngineService {
 
     public GameResult saveGame(Game game) {
