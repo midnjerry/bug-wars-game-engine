@@ -16,6 +16,7 @@ public class Game {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne
     private Map map;
     @OneToMany
     private List<BugInfo> bugInfos;

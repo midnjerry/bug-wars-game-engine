@@ -4,18 +4,28 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Embeddable
+@Entity
 public class MapSpaceRow {
 
+    public MapSpaceRow(List<MapSpace> spaces){
+        this(null, spaces);
+    }
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Long id;
+
     @ElementCollection
+    @JoinTable(joinColumns = @JoinColumn(name = "id"))
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     List<MapSpace> spaces;
 
 }

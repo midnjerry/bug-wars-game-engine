@@ -17,7 +17,7 @@ public class Map {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @ElementCollection
+    @ManyToMany
     List<MapSpaceRow> mapGrid;
 
     @ElementCollection
