@@ -8,7 +8,7 @@ The Bug Wars Game Engine contains an Interpreter for the Bug Wars AI Script lang
 4. MOVEMENT
 5. JUMP
 6. ATTACK
-7. RESOLVE Marked squares by generating new bugs from food.
+7. RESOLVE Marked squares by generating new bugInfos from food.
 
 ## Data Models
 Description of the data models used in the requests and responses for the Game Engine API.
@@ -63,7 +63,7 @@ _ _ _ _ 2
 ### Game
 The Game model has all starting information for the game to be executed.  This includes:
 * Map Terrain
-* Starting locations of bugs (Spawn Points)
+* Starting locations of bugInfos (Spawn Points)
 * Starting locations of food
 * Object Code used to execute the given bug
 
@@ -90,7 +90,7 @@ The Game model has all starting information for the game to be executed.  This i
             "y": "2"
         }
     },
-    "bugs": [
+    "bugInfos": [
         {
             "team": 1,
             "name": "AI NAME",

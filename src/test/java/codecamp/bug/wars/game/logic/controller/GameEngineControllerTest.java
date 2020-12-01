@@ -6,7 +6,6 @@ import codecamp.bug.wars.game.logic.models.*;
 import codecamp.bug.wars.game.logic.service.GameEngineService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,13 +40,13 @@ class GameEngineControllerTest {
         List<Food> food = Arrays.asList(new Food(1, 1));
         Map map = new Map(rows, spawns, food);
         List<Integer> code = Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1);
-        List<Bug> bugs = Arrays.asList(new Bug(1, code));
+        List<BugInfo> bugInfos = Arrays.asList(new BugInfo(null,1, code));
         BugResponse bugResponse = new BugResponse(2, Direction.NORTH, 3, 4, "attack", false);
         GameState gameStateTest = new GameState(1, bugResponse);
         List<Integer> winners = Arrays.asList(1, 2);
 
         List<GameState> gameStateArray = Arrays.asList(gameStateTest);
-        sampleGame = new Game(map, bugs, 1, null);
+        sampleGame = new Game(1L, map, bugInfos, 1, null);
         sampleGameResult = new GameResult(winners, "winner", gameStateArray);
 
 
@@ -56,7 +55,7 @@ class GameEngineControllerTest {
     @Test
     public void createGame_shouldReturn400IfGameRejectedByService() {
 
-        Game input = new Game(null, null, null, null);
+        Game input = new Game(1L, null, null, null, null);
 
         ResponseEntity<GameResult> expected = new ResponseEntity(new GameResult(), HttpStatus.BAD_REQUEST);
 
