@@ -5,22 +5,27 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class Game {
+public class MapSpaceRow {
+
+    public MapSpaceRow(List<MapSpace> spaces){
+        this(null, spaces);
+    }
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    private Map map;
-    @OneToMany
-    private List<BugInfo> bugInfos;
-    private Integer ticks;
-    private Long seed;
+
+    @ElementCollection
+    @JoinTable(joinColumns = @JoinColumn(name = "id"))
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    List<MapSpace> spaces;
 
 }
