@@ -4,13 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 
+import java.util.List;
+
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Embeddable
-public class Food {
-    Integer x;
-    Integer y;
+public class MapSpaceRow {
+
+    @ElementCollection
+    List<MapSpace> spaces;
+
 }

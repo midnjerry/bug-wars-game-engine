@@ -28,17 +28,17 @@ class GameEngineControllerTest {
         mockGameEngineService = Mockito.mock(GameEngineService.class);
         gameEngineController = new GameEngineController(mockGameEngineService);
 
-        MapSpace[][] rows = {
-                {MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN},
-                {MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN},
-                {MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN},
-                {MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN},
-                {MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN}
-        };
+        List<MapSpaceRow> rows = Arrays.asList(
+                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
+                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
+                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
+                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
+                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN))
+        );
 
         List<Spawn> spawns = Arrays.asList(new Spawn(1, 0, 1));
         List<Food> food = Arrays.asList(new Food(1, 1));
-        Map map = new Map(rows, spawns, food);
+        Map map = new Map(null, rows, spawns, food);
         List<Integer> code = Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1);
         List<BugInfo> bugInfos = Arrays.asList(new BugInfo(null,1, code));
         BugResponse bugResponse = new BugResponse(2, Direction.NORTH, 3, 4, "attack", false);
