@@ -26,5 +26,17 @@ public class Map {
     @ElementCollection
     List<Food> foods;
 
+    public MapSpace getSpace(int x, int y){
+        if (y < 0 || x < 0 || y >= mapGrid.size()) {
+            return MapSpace.WALL;
+        }
 
+       MapSpaceRow row = mapGrid.get(y);
+
+        if (x >= row.getSpaces().size()){
+            return MapSpace.WALL;
+        }
+
+        return row.getSpaces().get(x);
+    }
 }

@@ -15,5 +15,6 @@ public class Spawn {
     Integer x;
     Integer y;
     Integer team;
+//    Direction direction;
 
 }
