@@ -26,16 +26,17 @@ public class Map {
     @ElementCollection
     List<Food> foods;
 
-    public MapSpace getNextSpace(int x, int y, Direction direction){
-
-        switch (direction){
-            case EAST: return MapSpace.WALL;
-            case WEST: return MapSpace.OPEN;
-            case SOUTH: return MapSpace.OPEN;
-            case NORTH: return MapSpace.OPEN;
+    public MapSpace getSpace(int x, int y){
+        if (y < 0 || x < 0 || y >= mapGrid.size()) {
+            return MapSpace.WALL;
         }
-        return null;
-    };
 
+       MapSpaceRow row = mapGrid.get(y);
 
+        if (x >= row.getSpaces().size()){
+            return MapSpace.WALL;
+        }
+
+        return row.getSpaces().get(x);
+    }
 }

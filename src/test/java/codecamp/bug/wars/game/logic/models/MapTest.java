@@ -26,40 +26,19 @@ class MapTest {
     };
 
     @Test
-    public void getNextSpace_shouldReturnRightSpaceFacingEast(){
-//        Arrange
-//        Act
-        MapSpace result = map.getNextSpace(1,1, Direction.EAST);
-//        Assert
-        assertEquals(MapSpace.WALL, result);
+    public void getSpace_shouldReturnMapSpaceAtCoordinate(){
+        assertEquals(MapSpace.OPEN, map.getSpace(1,1));
+        assertEquals(MapSpace.WALL, map.getSpace(0,0));
     };
 
     @Test
-    public void getNextSpace_shouldReturnLeftSpaceFacingWest(){
-        //        Arrange
-//        Act
-        MapSpace result = map.getNextSpace(1,1, Direction.WEST);
-//        Assert
-        assertEquals(MapSpace.OPEN, result);
-    };
-
-    @Test
-    public void getNextSpace_shouldReturnTopSpaceFacingNorth(){
-        //        Arrange
-//        Act
-        MapSpace result = map.getNextSpace(1,1, Direction.NORTH);
-//        Assert
-        assertEquals(MapSpace.OPEN, result);
-    };
-
-    @Test
-    public void getNextSpace_shouldReturnTopSpaceFacingSouth(){
-        //        Arrange
-//        Act
-        MapSpace result = map.getNextSpace(1,1, Direction.SOUTH);
-//        Assert
-        assertEquals(MapSpace.OPEN, result);
+    public void getSpaceOutOfBounds_shouldReturnAWall(){
+        assertEquals(MapSpace.WALL, map.getSpace(0,-1));
+        assertEquals(MapSpace.WALL, map.getSpace(-1,0));
+        assertEquals(MapSpace.WALL, map.getSpace(5,0));
+        assertEquals(MapSpace.WALL, map.getSpace(0,5));
     }
+
 
 
     }
