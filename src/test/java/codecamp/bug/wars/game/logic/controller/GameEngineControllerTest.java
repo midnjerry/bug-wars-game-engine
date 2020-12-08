@@ -172,4 +172,19 @@ class GameEngineControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
+    @Test
+    public void replayGame_shouldReturn404GameNotFoundWhenIdIsInvalid(){
+        //arrange
+        Mockito.when(mockGameEngineService.getReplay(1l)).thenThrow(new GameNotFoundException("A game result with that id does not exist"));
+
+        //act
+        ResponseEntity<GameResult> response = gameEngineController.getGameReplay(1l);
+
+        //assert
+        assertEquals("A game result with that id does not exist", response);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+
+
 }
