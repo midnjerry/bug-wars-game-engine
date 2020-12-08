@@ -33,7 +33,7 @@ public class GameEngineService {
     }
 
     public GameResult getReplay(Long id){
-        return null;
+        return new GameResult();
     }
 
 
