@@ -4,8 +4,6 @@ import codecamp.bug.wars.game.logic.exceptions.GameNotFoundException;
 import codecamp.bug.wars.game.logic.exceptions.InvalidInputException;
 import codecamp.bug.wars.game.logic.models.*;
 import codecamp.bug.wars.game.logic.service.GameEngineService;
-import feign.Response;
-import org.apache.http.protocol.HTTP;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -16,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GameEngineControllerTest {
 
@@ -59,12 +57,12 @@ class GameEngineControllerTest {
 
         Game input = new Game(1L, null, null, null, null);
 
-        ResponseEntity<GameResult> expected = new ResponseEntity(new GameResult(), HttpStatus.BAD_REQUEST);
+        ResponseEntity<GameResponse> expected = new ResponseEntity(new GameResponse(null, "Invalid Game"), HttpStatus.BAD_REQUEST);
 
         Mockito.when(mockGameEngineService.saveGame(Mockito.any()))
                 .thenThrow(new InvalidInputException("Invalid Game"));
 
-        ResponseEntity<GameResult> response = gameEngineController.createGame(input);
+        ResponseEntity<GameResponse> response = gameEngineController.createGame(input);
 
         assertEquals(expected, response);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -74,11 +72,11 @@ class GameEngineControllerTest {
     @Test
     public void createGame_shouldReturnGameInputAndOkHttpStatus() {
         // arrange
-        ResponseEntity<GameResult> expectedResponse = new ResponseEntity(sampleGameResult, HttpStatus.OK);
+        ResponseEntity<GameResponse> expectedResponse = new ResponseEntity(new GameResponse(sampleGameResult, null), HttpStatus.OK);
         Mockito.when(mockGameEngineService.saveGame(Mockito.any())).thenReturn(sampleGameResult);
 
         // act
-        ResponseEntity<GameResult> response = gameEngineController.createGame(sampleGame);
+        ResponseEntity<GameResponse> response = gameEngineController.createGame(sampleGame);
 
         // assert
         assertEquals(expectedResponse, response);
@@ -88,11 +86,11 @@ class GameEngineControllerTest {
     @Test
     public void getGameReplay_shouldGetGameReplayAndOkHttpStatus() {
         //arrange
-        ResponseEntity<GameResult> expectedResponse = new ResponseEntity(sampleGameResult, HttpStatus.OK);
+        ResponseEntity<GameResponse> expectedResponse = new ResponseEntity(new GameResponse(sampleGameResult, null), HttpStatus.OK);
         Mockito.when(mockGameEngineService.getReplay(1L)).thenReturn(sampleGameResult);
 
         // act
-        ResponseEntity<GameResult> response = gameEngineController.getGameReplay(1L);
+        ResponseEntity<GameResponse> response = gameEngineController.getGameReplay(1L);
 
         // assert
         assertEquals(expectedResponse, response);
@@ -107,10 +105,10 @@ class GameEngineControllerTest {
                 .thenThrow(new GameNotFoundException("Game ID does not exist"));
 
         //act
-        ResponseEntity<GameResult> response = gameEngineController.getGameReplay(1l);
+        ResponseEntity<GameResponse> response = gameEngineController.getGameReplay(1l);
 
         //assert
-        assertEquals(new GameResult(), response.getBody());
+        assertEquals(new GameResponse(null, "Game ID does not exist"), response.getBody());
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
@@ -121,10 +119,10 @@ class GameEngineControllerTest {
                 .thenThrow(new GameNotFoundException("Game ID does not exist"));
 
         //act
-        ResponseEntity<GameResult> response = gameEngineController.getGameReplay(null);
+        ResponseEntity<GameResponse> response = gameEngineController.getGameReplay(null);
 
         //assert
-        assertEquals(new GameResult(), response.getBody());
+        assertEquals(new GameResponse(null, "Game ID does not exist"), response.getBody());
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
@@ -162,10 +160,10 @@ class GameEngineControllerTest {
     public void replayGame_shouldReturnGetReplayWithOkHTTPStatus(){
         //arrange
         Mockito.when(mockGameEngineService.getReplay(1l)).thenReturn(sampleGameResult);
-        ResponseEntity<GameResult> expected = new ResponseEntity<GameResult>(sampleGameResult, HttpStatus.OK);
+        ResponseEntity<GameResponse> expected = new ResponseEntity<GameResponse>(new GameResponse(sampleGameResult, null), HttpStatus.OK);
 
         //act
-        ResponseEntity<GameResult> response = gameEngineController.getGameReplay(1l);
+        ResponseEntity<GameResponse> response = gameEngineController.getGameReplay(1l);
 
         //assert
         assertEquals(expected, response);
@@ -175,14 +173,15 @@ class GameEngineControllerTest {
     @Test
     public void replayGame_shouldReturn404GameNotFoundWhenIdIsInvalid(){
         //arrange
-        Mockito.when(mockGameEngineService.getReplay(1l)).thenThrow(new GameNotFoundException("A game result with that id does not exist"));
+        Mockito.when(mockGameEngineService.getReplay(null)).thenThrow(new GameNotFoundException("A game result with that id does not exist"));
 
         //act
-        ResponseEntity<GameResult> response = gameEngineController.getGameReplay(1l);
+        ResponseEntity<GameResponse> response = gameEngineController.getGameReplay(null);
 
         //assert
-        assertEquals("A game result with that id does not exist", response);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals("A game result with that id does not exist", response.getBody().getError());
+
     }
 
 

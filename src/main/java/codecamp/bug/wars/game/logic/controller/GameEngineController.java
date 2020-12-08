@@ -3,6 +3,7 @@ package codecamp.bug.wars.game.logic.controller;
 import codecamp.bug.wars.game.logic.exceptions.GameNotFoundException;
 import codecamp.bug.wars.game.logic.exceptions.InvalidInputException;
 import codecamp.bug.wars.game.logic.models.Game;
+import codecamp.bug.wars.game.logic.models.GameResponse;
 import codecamp.bug.wars.game.logic.models.GameResult;
 import codecamp.bug.wars.game.logic.service.GameEngineService;
 import org.springframework.http.HttpStatus;
@@ -26,27 +27,27 @@ public class GameEngineController {
     }
 
     @PostMapping("/games")
-    public ResponseEntity<GameResult> createGame(@RequestBody Game game) {
+    public ResponseEntity<GameResponse> createGame(@RequestBody Game game) {
 
         try {
             GameResult result = gameEngineService.saveGame(game);
-            return new ResponseEntity(result, HttpStatus.OK);
+            return new ResponseEntity(new GameResponse(result, null), HttpStatus.OK);
 
         } catch (InvalidInputException e) {
 
-            return new ResponseEntity(new GameResult(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new GameResponse(null, e.getMessage()), HttpStatus.BAD_REQUEST);
 
         }
 
     }
 
     @GetMapping("/games/{id}/replay")
-    public ResponseEntity<GameResult> getGameReplay(@PathVariable Long id) {
+    public ResponseEntity<GameResponse> getGameReplay(@PathVariable Long id) {
         try {
             GameResult result = gameEngineService.getReplay(id);
-            return new ResponseEntity(result, HttpStatus.OK);
+            return new ResponseEntity(new GameResponse(result, null), HttpStatus.OK);
         } catch (GameNotFoundException e) {
-            return new ResponseEntity(new GameResult(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity(new GameResponse(null, e.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
 
