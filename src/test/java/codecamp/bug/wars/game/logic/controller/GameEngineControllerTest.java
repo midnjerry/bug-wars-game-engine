@@ -4,6 +4,8 @@ import codecamp.bug.wars.game.logic.exceptions.GameNotFoundException;
 import codecamp.bug.wars.game.logic.exceptions.InvalidInputException;
 import codecamp.bug.wars.game.logic.models.*;
 import codecamp.bug.wars.game.logic.service.GameEngineService;
+import feign.Response;
+import org.apache.http.protocol.HTTP;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -155,4 +157,19 @@ class GameEngineControllerTest {
         assertEquals(expected, response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
+
+    @Test
+    public void replayGame_shouldReturnGetReplayWithOkHTTPStatus(){
+        //arrange
+        Mockito.when(mockGameEngineService.getReplay(1l)).thenReturn(sampleGameResult);
+        ResponseEntity<GameResult> expected = new ResponseEntity<GameResult>(sampleGameResult, HttpStatus.OK);
+
+        //act
+        ResponseEntity<GameResult> response = gameEngineController.getGameReplay(1l);
+
+        //assert
+        assertEquals(expected, response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
 }
