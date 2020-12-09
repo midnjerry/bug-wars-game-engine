@@ -1,8 +1,7 @@
 package codecamp.bug.wars.game.logic.service.actions;
 
-import codecamp.bug.wars.game.logic.models.GameState;
 import codecamp.bug.wars.game.logic.models.Map;
-import codecamp.bug.wars.game.logic.service.BugRunner;
+import codecamp.bug.wars.game.logic.models.BugRunner;
 
 public class NoopAction implements Action {
 

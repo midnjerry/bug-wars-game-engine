@@ -14,5 +14,4 @@ public class GameResult {
     List<Integer> winners;
     String result;
     List<GameState> gameStates;
-
 }

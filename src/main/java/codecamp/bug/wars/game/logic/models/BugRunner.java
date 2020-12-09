@@ -1,4 +1,4 @@
-package codecamp.bug.wars.game.logic.service;
+package codecamp.bug.wars.game.logic.models;
 
 import codecamp.bug.wars.game.logic.models.Direction;
 import codecamp.bug.wars.game.logic.models.Game;
