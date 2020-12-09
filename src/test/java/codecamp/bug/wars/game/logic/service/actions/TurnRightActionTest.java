@@ -1,7 +1,7 @@
 package codecamp.bug.wars.game.logic.service.actions;
 
 import codecamp.bug.wars.game.logic.models.*;
-import codecamp.bug.wars.game.logic.service.BugRunner;
+import codecamp.bug.wars.game.logic.models.BugRunner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -5,7 +5,7 @@ import codecamp.bug.wars.game.logic.exceptions.InvalidInputException;
 import codecamp.bug.wars.game.logic.models.Game;
 import codecamp.bug.wars.game.logic.models.GameResponse;
 import codecamp.bug.wars.game.logic.models.GameResult;
-import codecamp.bug.wars.game.logic.service.GameEngineService;
+import codecamp.bug.wars.game.logic.service.GameLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +15,9 @@ import java.util.List;
 @RestController
 public class GameEngineController {
 
-    private GameEngineService gameEngineService;
+    private GameLoader gameEngineService;
 
-    public GameEngineController(GameEngineService service) {
+    public GameEngineController(GameLoader service) {
         gameEngineService = service;
     }
 
@@ -30,7 +30,7 @@ public class GameEngineController {
     public ResponseEntity<GameResponse> createGame(@RequestBody Game game) {
 
         try {
-            GameResult result = gameEngineService.saveGame(game);
+            GameResult result = gameEngineService.createGame(game);
             return new ResponseEntity(new GameResponse(result, null), HttpStatus.OK);
 
         } catch (InvalidInputException e) {

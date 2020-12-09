@@ -3,7 +3,7 @@ package codecamp.bug.wars.game.logic.controller;
 import codecamp.bug.wars.game.logic.exceptions.GameNotFoundException;
 import codecamp.bug.wars.game.logic.exceptions.InvalidInputException;
 import codecamp.bug.wars.game.logic.models.*;
-import codecamp.bug.wars.game.logic.service.GameEngineService;
+import codecamp.bug.wars.game.logic.service.GameLoader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -18,14 +18,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GameEngineControllerTest {
 
-    private GameEngineService mockGameEngineService;
+    private GameLoader mockGameEngineService;
     private GameEngineController gameEngineController;
     private Game sampleGame;
     private GameResult sampleGameResult;
 
     @BeforeEach
     public void setup() {
-        mockGameEngineService = Mockito.mock(GameEngineService.class);
+        mockGameEngineService = Mockito.mock(GameLoader.class);
         gameEngineController = new GameEngineController(mockGameEngineService);
 
         List<MapSpaceRow> rows = Arrays.asList(
@@ -59,7 +59,7 @@ class GameEngineControllerTest {
 
         ResponseEntity<GameResponse> expected = new ResponseEntity(new GameResponse(null, "Invalid Game"), HttpStatus.BAD_REQUEST);
 
-        Mockito.when(mockGameEngineService.saveGame(Mockito.any()))
+        Mockito.when(mockGameEngineService.createGame(Mockito.any()))
                 .thenThrow(new InvalidInputException("Invalid Game"));
 
         ResponseEntity<GameResponse> response = gameEngineController.createGame(input);
@@ -73,7 +73,7 @@ class GameEngineControllerTest {
     public void createGame_shouldReturnGameInputAndOkHttpStatus() {
         // arrange
         ResponseEntity<GameResponse> expectedResponse = new ResponseEntity(new GameResponse(sampleGameResult, null), HttpStatus.OK);
-        Mockito.when(mockGameEngineService.saveGame(Mockito.any())).thenReturn(sampleGameResult);
+        Mockito.when(mockGameEngineService.createGame(Mockito.any())).thenReturn(sampleGameResult);
 
         // act
         ResponseEntity<GameResponse> response = gameEngineController.createGame(sampleGame);
