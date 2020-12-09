@@ -23,5 +23,8 @@ public class TurnRightAction implements Action{
                 bugRunner.setDirection(Direction.NORTH);
                 break;
         }
+
+        bugRunner.setEndX(bugRunner.getStartX());
+        bugRunner.setEndY(bugRunner.getStartY());
     }
 }

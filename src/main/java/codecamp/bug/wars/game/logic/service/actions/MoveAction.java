@@ -8,26 +8,30 @@ import codecamp.bug.wars.game.logic.service.BugRunner;
 public class MoveAction implements Action{
 
     public void execute(BugRunner bugRunner, Map map) {
-        int targetX = bugRunner.getX();
-        int targetY = bugRunner.getY();
+        int targetX = bugRunner.getStartX();
+        int targetY = bugRunner.getStartY();
 
         switch (bugRunner.getDirection()) {
             case NORTH:
-                targetY = bugRunner.getY() - 1;
+                targetY = bugRunner.getStartY() - 1;
                 break;
             case EAST:
-                targetX = bugRunner.getX() + 1;
+                targetX = bugRunner.getStartX() + 1;
                 break;
             case SOUTH:
-                targetY = bugRunner.getY() + 1;
+                targetY = bugRunner.getStartY() + 1;
                 break;
             case WEST:
-                targetX = bugRunner.getX() - 1;
+                targetX = bugRunner.getStartX() - 1;
                 break;
         }
         if(map.getSpace(targetX , targetY) != MapSpace.WALL){
-            bugRunner.setX(targetX);
-            bugRunner.setY(targetY);
+            bugRunner.setEndX(targetX);
+            bugRunner.setEndY(targetY);
+        }
+        else {
+            bugRunner.setEndX(bugRunner.getStartX());
+            bugRunner.setEndY(bugRunner.getStartY());
         }
     }
 }

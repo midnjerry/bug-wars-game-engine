@@ -18,8 +18,8 @@ class TurnLeftActionTest {
     @BeforeEach
     public void setup() {
         bug = new BugRunner();
-        bug.setX(1);
-        bug.setY(1);
+        bug.setStartX(1);
+        bug.setStartY(1);
 
         turnLeftAction = new TurnLeftAction();
 
@@ -66,7 +66,9 @@ class TurnLeftActionTest {
     public void execute_shouldNotChangeCoordinates(){
         bug.setDirection(Direction.EAST);
         turnLeftAction.execute(bug, map);
-        assertEquals(1, bug.getX());
-        assertEquals(1, bug.getY());
+        assertEquals(1, bug.getStartX());
+        assertEquals(1, bug.getStartY());
+        assertEquals(1, bug.getEndX());
+        assertEquals(1, bug.getEndY());
     }
 }

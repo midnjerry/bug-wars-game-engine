@@ -23,5 +23,8 @@ public class TurnLeftAction implements Action{
                 bugRunner.setDirection(Direction.SOUTH);
                 break;
         }
+
+        bugRunner.setEndX(bugRunner.getStartX());
+        bugRunner.setEndY(bugRunner.getStartY());
     }
 }

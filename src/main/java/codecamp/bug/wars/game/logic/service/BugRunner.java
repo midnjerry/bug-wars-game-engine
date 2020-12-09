@@ -15,8 +15,10 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class BugRunner {
-    int x;
-    int y;
+    int startX;
+    int startY;
+    int endX;
+    int endY;
     Direction direction;
     boolean dying;
     int team;

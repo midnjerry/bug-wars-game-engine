@@ -19,8 +19,8 @@ class TurnRightActionTest {
     @BeforeEach
     public void setup() {
         bug = new BugRunner();
-        bug.setX(1);
-        bug.setY(1);
+        bug.setStartX(1);
+        bug.setStartY(1);
 
         turnRightAction = new TurnRightAction();
 
@@ -67,7 +67,7 @@ class TurnRightActionTest {
     public void execute_shouldNotChangeCoordinates(){
         bug.setDirection(Direction.EAST);
         turnRightAction.execute(bug, map);
-        assertEquals(1, bug.getX());
-        assertEquals(1, bug.getY());
+        assertEquals(1, bug.getEndX());
+        assertEquals(1, bug.getEndY());
     }
 }

@@ -8,6 +8,7 @@ public class NoopAction implements Action {
 
     @Override
     public void execute(BugRunner bugRunner, Map map) {
-
+        bugRunner.setEndX(bugRunner.getStartX());
+        bugRunner.setEndY(bugRunner.getStartY());
     }
 }
