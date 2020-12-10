@@ -1,7 +1,7 @@
 package codecamp.bug.wars.game.logic.service.actions;
 
 import codecamp.bug.wars.game.logic.models.*;
-import codecamp.bug.wars.game.logic.models.BugRunner;
+import codecamp.bug.wars.game.logic.service.engine.BugExecutor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,11 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class TurnLeftActionTest {
     TurnLeftAction turnLeftAction;
     Map map;
-    BugRunner bug;
+    BugExecutor bug;
 
     @BeforeEach
     public void setup() {
-        bug = new BugRunner();
+        bug = new BugExecutor();
         bug.setX(1);
         bug.setY(1);
 

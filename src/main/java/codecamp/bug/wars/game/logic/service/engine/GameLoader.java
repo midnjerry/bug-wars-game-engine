@@ -1,10 +1,11 @@
-package codecamp.bug.wars.game.logic.service;
+package codecamp.bug.wars.game.logic.service.engine;
 
 import codecamp.bug.wars.game.logic.exceptions.GameNotFoundException;
 import codecamp.bug.wars.game.logic.exceptions.InvalidInputException;
 import codecamp.bug.wars.game.logic.models.Game;
 import codecamp.bug.wars.game.logic.models.GameResult;
 import codecamp.bug.wars.game.logic.repository.GameRepository;
+import codecamp.bug.wars.game.logic.service.GameEngine;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

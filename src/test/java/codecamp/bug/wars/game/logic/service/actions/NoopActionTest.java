@@ -1,7 +1,7 @@
 package codecamp.bug.wars.game.logic.service.actions;
 
 import codecamp.bug.wars.game.logic.models.*;
-import codecamp.bug.wars.game.logic.models.BugRunner;
+import codecamp.bug.wars.game.logic.service.engine.BugExecutor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +14,7 @@ public class NoopActionTest {
 
     MoveAction moveAction;
     Map map;
-    BugRunner bug;
+    BugExecutor bug;
     NoopAction noop;
     GameState gameState;
 
@@ -28,7 +28,7 @@ public class NoopActionTest {
                 new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN))
         );
         map = new Map(null, rows, null, null);
-        bug = new BugRunner();
+        bug = new BugExecutor();
         moveAction = new MoveAction();
         noop = new NoopAction();
         gameState = new GameState();
