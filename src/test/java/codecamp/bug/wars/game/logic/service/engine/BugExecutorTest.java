@@ -68,9 +68,75 @@ class BugExecutorTest {
         assertEquals(2, bugExecutor.getProgramCounter());
     }
 
-    // return NOOP if objCode doesn't map to Action
-    // write a test for '20' (GOTO)  (NEED TO SET PC)
-    // STOP INFINITE LOOP.  6 GOTOS SHOULD RETURN NOOP
-    //
+    @Test
+    public void getNextCommand_shouldReturnNoopIfCommandNotMappedAndIterateCounter(){
+        // arrange
+        bugExecutor.setProgramCounter(0);
+        bugExecutor.setProgram(Arrays.asList(1, 0, 0));
+        Action expected = new NoopAction();
 
+        // act
+        Action actual = bugExecutor.getNextCommand();
+
+        // assert
+        assertEquals(expected, actual);
+        assertEquals(1, bugExecutor.getProgramCounter());
+    }
+
+    @Test
+    public void getNextCommand_gotoShouldSetProgramCounter(){
+        // arrange
+        bugExecutor.setProgramCounter(0);
+        bugExecutor.setProgram(Arrays.asList(20, 2, 0, 1, 1));
+
+        // act
+        bugExecutor.getNextCommand();
+
+        // assert
+        assertEquals(3, bugExecutor.getProgramCounter());
+    }
+
+    @Test
+    public void getNextCommand_gotoShouldReturnActionAtTargetIndex(){
+        // arrange
+        bugExecutor.setProgramCounter(0);
+        bugExecutor.setProgram(Arrays.asList(20, 2, 0, 1, 1));
+        Action expected = new NoopAction();
+
+        // act
+        Action actual = bugExecutor.getNextCommand();
+
+        // assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void getNextCommand_gotoShouldRunMoreThanOnce(){
+        // arrange
+        bugExecutor.setProgramCounter(0);
+        bugExecutor.setProgram(Arrays.asList(20, 2, 20, 5, 0, 2, 0, 0, 0));
+        Action expected = new MoveAction();
+
+        // act
+        Action actual = bugExecutor.getNextCommand();
+
+        // assert
+        assertEquals(expected, actual);
+        assertEquals(6, bugExecutor.getProgramCounter());
+    }
+
+    @Test
+    public void getNextCommand_gotoShouldNotLoopMoreThanSixTimes(){
+        // arrange
+        bugExecutor.setProgramCounter(0);
+        bugExecutor.setProgram(Arrays.asList(20, 2, 20, 4, 20, 0));
+        Action expected = new NoopAction();
+
+        // act
+        Action actual = bugExecutor.getNextCommand();
+
+        // assert
+        assertEquals(0, bugExecutor.getProgramCounter());
+        assertEquals(expected, actual);
+    }
 }
