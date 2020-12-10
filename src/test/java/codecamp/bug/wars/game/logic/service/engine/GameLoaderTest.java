@@ -1,10 +1,12 @@
-package codecamp.bug.wars.game.logic.service;
+package codecamp.bug.wars.game.logic.service.engine;
 
 
 import codecamp.bug.wars.game.logic.exceptions.GameNotFoundException;
 import codecamp.bug.wars.game.logic.exceptions.InvalidInputException;
 import codecamp.bug.wars.game.logic.models.*;
 import codecamp.bug.wars.game.logic.repository.GameRepository;
+import codecamp.bug.wars.game.logic.service.GameEngine;
+import codecamp.bug.wars.game.logic.service.engine.GameLoader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -18,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class GameEngineServiceTest {
+public class GameLoaderTest {
 
     private GameRepository gameEngineMockRepository;
     private GameLoader mockGameLoader;
@@ -47,7 +49,7 @@ public class GameEngineServiceTest {
         List<Integer> code = Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1);
         List<BugInfo> bugInfos = Arrays.asList(new BugInfo(null, 1, code.toString()));
         BugResponse bugResponse = new BugResponse(2, Direction.NORTH, 3, 4, "attack", false);
-        GameState gameStateTest = new GameState(1, bugResponse);
+        GameState gameStateTest = new GameState(map, 1, null, food);
         List<Integer> winners = Arrays.asList(1, 2);
 
         List<GameState> gameStateArray = Arrays.asList(gameStateTest);

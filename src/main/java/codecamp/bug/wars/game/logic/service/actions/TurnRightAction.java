@@ -2,25 +2,27 @@ package codecamp.bug.wars.game.logic.service.actions;
 
 import codecamp.bug.wars.game.logic.models.Direction;
 import codecamp.bug.wars.game.logic.models.Map;
-import codecamp.bug.wars.game.logic.models.BugRunner;
+import codecamp.bug.wars.game.logic.service.engine.BugExecutor;
+import lombok.Data;
 
+@Data
 public class TurnRightAction implements Action{
     @Override
-    public void execute(BugRunner bugRunner, Map map) {
+    public void execute(BugExecutor bugExecutor, Map map) {
 
-        switch(bugRunner.getDirection()) {
+        switch(bugExecutor.getDirection()) {
 
             case NORTH:
-                bugRunner.setDirection(Direction.EAST);
+                bugExecutor.setDirection(Direction.EAST);
                 break;
             case EAST:
-                bugRunner.setDirection(Direction.SOUTH);
+                bugExecutor.setDirection(Direction.SOUTH);
                 break;
             case SOUTH:
-                bugRunner.setDirection(Direction.WEST);
+                bugExecutor.setDirection(Direction.WEST);
                 break;
             case WEST:
-                bugRunner.setDirection(Direction.NORTH);
+                bugExecutor.setDirection(Direction.NORTH);
                 break;
         }
     }

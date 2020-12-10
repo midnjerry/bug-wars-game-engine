@@ -5,7 +5,7 @@ import codecamp.bug.wars.game.logic.exceptions.InvalidInputException;
 import codecamp.bug.wars.game.logic.models.Game;
 import codecamp.bug.wars.game.logic.models.GameResponse;
 import codecamp.bug.wars.game.logic.models.GameResult;
-import codecamp.bug.wars.game.logic.service.GameLoader;
+import codecamp.bug.wars.game.logic.service.engine.GameLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
