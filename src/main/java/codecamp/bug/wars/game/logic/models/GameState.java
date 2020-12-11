@@ -16,5 +16,4 @@ public class GameState {
     Integer tick;
     List<BugExecutor> bugs;
     List<Food> food;
-
 }

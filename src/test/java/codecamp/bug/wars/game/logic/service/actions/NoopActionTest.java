@@ -37,16 +37,16 @@ public class NoopActionTest {
     @Test
     public void noop() {
         // arrange
-        bug.setX(1);
-        bug.setY(1);
+        bug.setStartingX(1);
+        bug.setStartingY(1);
         bug.setDirection(Direction.NORTH);
 
         // act
         noop.execute(bug, map);
 
         // arrange
-        assertEquals(1, bug.getX());
-        assertEquals(1, bug.getY());
+        assertEquals(1, bug.getStartingX());
+        assertEquals(1, bug.getStartingY());
         assertEquals(Direction.NORTH, bug.getDirection());
     }
 }

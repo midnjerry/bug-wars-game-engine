@@ -32,23 +32,27 @@ class MoveActionTest {
     @Test
     public void movesNorth_decrementsY() {
         // arrange
-        bug.setX(1);
-        bug.setY(2);
+        bug.setStartingX(1);
+        bug.setStartingY(2);
         bug.setDirection(Direction.NORTH);
 
         // act
         moveAction.execute(bug, map);
 
         // assert
-        assertEquals(1,bug.getX());
-        assertEquals(1,bug.getY());
+        assertEquals(1,bug.getEndingX());
+        assertEquals(1,bug.getEndingY());
+
+        // arrange
+        bug.setStartingX(bug.getEndingX());
+        bug.setStartingY(bug.getEndingY());
 
         // act
         moveAction.execute(bug, map);
 
         // assert
-        assertEquals(1,bug.getX());
-        assertEquals(0,bug.getY());
+        assertEquals(1,bug.getEndingX());
+        assertEquals(0,bug.getEndingY());
         assertEquals(Direction.NORTH, bug.getDirection());
 
     }
@@ -56,133 +60,153 @@ class MoveActionTest {
     @Test
     public void movesWest_decrementsX() {
         // arrange
-        bug.setX(2);
-        bug.setY(1);
+        bug.setStartingX(2);
+        bug.setStartingY(1);
         bug.setDirection(Direction.WEST);
 
         // act
         moveAction.execute(bug, map);
 
         // assert
-        assertEquals(1,bug.getX());
-        assertEquals(1,bug.getY());
+        assertEquals(1,bug.getEndingX());
+        assertEquals(1,bug.getEndingY());
+
+        // arrange
+        bug.setStartingX(bug.getEndingX());
+        bug.setStartingY(bug.getEndingY());
 
         // act
         moveAction.execute(bug, map);
 
         // assert
-        assertEquals(0,bug.getX());
-        assertEquals(1,bug.getY());
+        assertEquals(0,bug.getEndingX());
+        assertEquals(1,bug.getEndingY());
         assertEquals(Direction.WEST, bug.getDirection());
     }
 
     @Test
     public void movesEast_incrementsX() {
         // arrange
-        bug.setX(1);
-        bug.setY(1);
+        bug.setStartingX(1);
+        bug.setStartingY(1);
         bug.setDirection(Direction.EAST);
 
         // act
         moveAction.execute(bug, map);
 
         // assert
-        assertEquals(2,bug.getX());
-        assertEquals(1,bug.getY());
+        assertEquals(2,bug.getEndingX());
+        assertEquals(1,bug.getEndingY());
+
+        // arrange
+        bug.setStartingX(bug.getEndingX());
+        bug.setStartingY(bug.getEndingY());
 
         // act
         moveAction.execute(bug, map);
 
         // assert
-        assertEquals(3,bug.getX());
-        assertEquals(1,bug.getY());
+        assertEquals(3,bug.getEndingX());
+        assertEquals(1,bug.getEndingY());
         assertEquals(Direction.EAST, bug.getDirection());
     }
 
     @Test
     public void movesSouth_incrementsY() {
         // arrange
-        bug.setX(1);
-        bug.setY(1);
+        bug.setStartingX(1);
+        bug.setStartingY(1);
         bug.setDirection(Direction.SOUTH);
 
         // act
         moveAction.execute(bug, map);
 
         // assert
-        assertEquals(1,bug.getX());
-        assertEquals(2,bug.getY());
+        assertEquals(1,bug.getEndingX());
+        assertEquals(2,bug.getEndingY());
+
+        // arrange
+        bug.setStartingX(bug.getEndingX());
+        bug.setStartingY(bug.getEndingY());
 
         // act
         moveAction.execute(bug, map);
 
         // assert
-        assertEquals(1,bug.getX());
-        assertEquals(3,bug.getY());
+        assertEquals(1,bug.getEndingX());
+        assertEquals(3,bug.getEndingY());
         assertEquals(Direction.SOUTH, bug.getDirection());
     }
 
     @Test
     public void cantMoveIntoWall_NORTH(){
         //arrange
-        bug.setX(3);
-        bug.setY(4);
+        bug.setStartingX(3);
+        bug.setStartingY(4);
+        bug.setEndingX(3);
+        bug.setEndingY(4);
         bug.setDirection(Direction.NORTH);
 
         //act
         moveAction.execute(bug, map);
 
         //assert
-        assertEquals(3,bug.getX());
-        assertEquals(4,bug.getY());
+        assertEquals(3,bug.getEndingX());
+        assertEquals(4,bug.getEndingY());
         assertEquals(Direction.NORTH, bug.getDirection());
     }
 
     @Test
     public void cantMoveIntoWall_EAST(){
         //arrange
-        bug.setX(2);
-        bug.setY(3);
+        bug.setStartingX(2);
+        bug.setStartingY(3);
+        bug.setEndingX(2);
+        bug.setEndingY(3);
         bug.setDirection(Direction.EAST);
 
         //act
         moveAction.execute(bug, map);
 
         //assert
-        assertEquals(2,bug.getX());
-        assertEquals(3,bug.getY());
+        assertEquals(2,bug.getEndingX());
+        assertEquals(3,bug.getEndingY());
         assertEquals(Direction.EAST, bug.getDirection());
     }
 
     @Test
     public void cantMoveIntoWall_SOUTH(){
         //arrange
-        bug.setX(3);
-        bug.setY(2);
+        bug.setStartingX(3);
+        bug.setStartingY(2);
+        bug.setEndingX(3);
+        bug.setEndingY(2);
         bug.setDirection(Direction.SOUTH);
 
         //act
         moveAction.execute(bug, map);
 
         //assert
-        assertEquals(3,bug.getX());
-        assertEquals(2,bug.getY());
+        assertEquals(3,bug.getEndingX());
+        assertEquals(2,bug.getEndingY());
         assertEquals(Direction.SOUTH, bug.getDirection());
     }
 
     @Test
     public void cantMoveIntoWall_WEST(){
         //arrange
-        bug.setX(4);
-        bug.setY(3);
+        bug.setStartingX(4);
+        bug.setStartingY(3);
+        bug.setEndingX(4);
+        bug.setEndingY(3);
         bug.setDirection(Direction.WEST);
 
         //act
         moveAction.execute(bug, map);
 
         //assert
-        assertEquals(4,bug.getX());
-        assertEquals(3,bug.getY());
+        assertEquals(4,bug.getEndingX());
+        assertEquals(3,bug.getEndingY());
         assertEquals(Direction.WEST, bug.getDirection());
     }
 

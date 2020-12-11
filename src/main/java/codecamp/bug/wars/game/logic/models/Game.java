@@ -22,5 +22,4 @@ public class Game {
     private List<BugInfo> bugInfos;
     private Integer ticks;
     private Long seed;
-
 }

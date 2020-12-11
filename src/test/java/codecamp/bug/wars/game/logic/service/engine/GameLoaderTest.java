@@ -43,7 +43,7 @@ public class GameLoaderTest {
                 new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN))
         );
 
-        List<Spawn> spawns = Arrays.asList(new Spawn(1, 0, 1));
+        List<Spawn> spawns = Arrays.asList(new Spawn(1, 0, 1, Direction.NORTH));
         List<Food> food = Arrays.asList(new Food(1, 1));
         Map map = new Map(null, rows, spawns, food);
         List<Integer> code = Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1);

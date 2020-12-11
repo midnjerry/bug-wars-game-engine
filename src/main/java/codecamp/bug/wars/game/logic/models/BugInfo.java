@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Data
@@ -19,4 +21,13 @@ public class BugInfo {
     Integer team;
 
     String code;
+
+    public List<Integer> parseCode(){
+        List<String> stringList = Arrays.asList(code.split(" "));
+        List<Integer> resList = new ArrayList<>();
+        for(String code : stringList){
+            resList.add(Integer.parseInt(code));
+        }
+        return resList;
+    }
 }
