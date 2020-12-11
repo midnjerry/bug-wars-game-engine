@@ -16,8 +16,10 @@ import java.util.Map;
 @AllArgsConstructor
 @Data
 public class BugExecutor {
-    int x;
-    int y;
+    int startingX;
+    int startingY;
+    int EndingX;
+    int EndingY;
     Direction direction;
     boolean dying;
     int team;
@@ -34,6 +36,9 @@ public class BugExecutor {
     }
 
     public Action getNextCommand() {
+        if(programCounter >= program.size()){
+            return new NoopAction();
+        }
         int objCode = program.get(programCounter);
         int counter = 0;
         while(objCode == 20 && counter<6){

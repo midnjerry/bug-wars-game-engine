@@ -19,8 +19,10 @@ class TurnRightActionTest {
     @BeforeEach
     public void setup() {
         bug = new BugExecutor();
-        bug.setX(1);
-        bug.setY(1);
+        bug.setStartingX(1);
+        bug.setStartingY(1);
+        bug.setEndingX(1);
+        bug.setEndingY(1);
 
         turnRightAction = new TurnRightAction();
 
@@ -30,7 +32,7 @@ class TurnRightActionTest {
                 new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN))
         );
 
-        List<Spawn> spawns = Arrays.asList(new Spawn(1, 0, 1));
+        List<Spawn> spawns = Arrays.asList(new Spawn(1, 0, 1, Direction.NORTH));
         List<Food> food = Arrays.asList(new Food(1, 1));
         map = new Map(null, rows, spawns, food);
     }
@@ -67,7 +69,7 @@ class TurnRightActionTest {
     public void execute_shouldNotChangeCoordinates(){
         bug.setDirection(Direction.EAST);
         turnRightAction.execute(bug, map);
-        assertEquals(1, bug.getX());
-        assertEquals(1, bug.getY());
+        assertEquals(1, bug.getEndingX());
+        assertEquals(1, bug.getEndingY());
     }
 }

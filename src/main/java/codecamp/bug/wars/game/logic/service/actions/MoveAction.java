@@ -9,26 +9,26 @@ import lombok.Data;
 public class MoveAction implements Action{
 
     public void execute(BugExecutor bugExecutor, Map map) {
-        int targetX = bugExecutor.getX();
-        int targetY = bugExecutor.getY();
+        int targetX = bugExecutor.getStartingX();
+        int targetY = bugExecutor.getStartingY();
 
         switch (bugExecutor.getDirection()) {
             case NORTH:
-                targetY = bugExecutor.getY() - 1;
+                targetY = bugExecutor.getStartingY() - 1;
                 break;
             case EAST:
-                targetX = bugExecutor.getX() + 1;
+                targetX = bugExecutor.getStartingX() + 1;
                 break;
             case SOUTH:
-                targetY = bugExecutor.getY() + 1;
+                targetY = bugExecutor.getStartingY() + 1;
                 break;
             case WEST:
-                targetX = bugExecutor.getX() - 1;
+                targetX = bugExecutor.getStartingX() - 1;
                 break;
         }
         if(map.getSpace(targetX , targetY) != MapSpace.WALL){
-            bugExecutor.setX(targetX);
-            bugExecutor.setY(targetY);
+            bugExecutor.setEndingX(targetX);
+            bugExecutor.setEndingY(targetY);
         }
     }
 }
