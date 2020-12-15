@@ -117,4 +117,76 @@ public class MoveBackActionTest {
         assertEquals(1,bug.getEndingY());
         assertEquals(Direction.EAST, bug.getDirection());
     }
+
+    @Test
+    public void canNotMoveBackIntoWall_facingNorth() {
+        // arrange
+        bug.setStartingX(3);
+        bug.setStartingY(4);
+        bug.setEndingX(3);
+        bug.setEndingY(4);
+        bug.setDirection(Direction.NORTH);
+
+        //act
+        moveBackAction.execute(bug, map);
+
+        //assert
+        assertEquals(3,bug.getEndingX());
+        assertEquals(4,bug.getEndingY());
+        assertEquals(Direction.NORTH, bug.getDirection());
+    }
+
+    @Test
+    public void canNotMoveBackIntoWall_facingSouth() {
+        // arrange
+        bug.setStartingX(3);
+        bug.setStartingY(4);
+        bug.setEndingX(3);
+        bug.setEndingY(4);
+        bug.setDirection(Direction.SOUTH);
+
+        //act
+        moveBackAction.execute(bug, map);
+
+        //assert
+        assertEquals(3,bug.getEndingX());
+        assertEquals(4,bug.getEndingY());
+        assertEquals(Direction.SOUTH, bug.getDirection());
+    }
+
+    @Test
+    public void canNotMoveBackIntoWall_facingWest() {
+        // arrange
+        bug.setStartingX(4);
+        bug.setStartingY(3);
+        bug.setEndingX(4);
+        bug.setEndingY(3);
+        bug.setDirection(Direction.WEST);
+
+        //act
+        moveBackAction.execute(bug, map);
+
+        //assert
+        assertEquals(4,bug.getEndingX());
+        assertEquals(3,bug.getEndingY());
+        assertEquals(Direction.WEST, bug.getDirection());
+    }
+
+    @Test
+    public void canNotMoveBackIntoWall_facingEast() {
+        // arrange
+        bug.setStartingX(4);
+        bug.setStartingY(3);
+        bug.setEndingX(4);
+        bug.setEndingY(3);
+        bug.setDirection(Direction.EAST);
+
+        //act
+        moveBackAction.execute(bug, map);
+
+        //assert
+        assertEquals(4,bug.getEndingX());
+        assertEquals(3,bug.getEndingY());
+        assertEquals(Direction.EAST, bug.getDirection());
+    }
 }

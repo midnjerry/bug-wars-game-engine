@@ -2,6 +2,7 @@ package codecamp.bug.wars.game.logic.service.actions;
 
 import codecamp.bug.wars.game.logic.models.Direction;
 import codecamp.bug.wars.game.logic.models.Map;
+import codecamp.bug.wars.game.logic.models.MapSpace;
 import codecamp.bug.wars.game.logic.service.engine.BugExecutor;
 import lombok.Data;
 @Data
@@ -24,12 +25,11 @@ public class MoveBackAction implements Action{
                 targetX = bugExecutor.getStartingX() - 1;
                 break;
         }
-        bugExecutor.setEndingX(targetX);
-        bugExecutor.setEndingY(targetY);
 
-
-
-
+        if(map.getSpace(targetX , targetY) != MapSpace.WALL){
+            bugExecutor.setEndingX(targetX);
+            bugExecutor.setEndingY(targetY);
+        }
     }
 
 
