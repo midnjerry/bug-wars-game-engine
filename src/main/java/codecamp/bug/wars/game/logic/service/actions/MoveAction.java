@@ -1,6 +1,6 @@
 package codecamp.bug.wars.game.logic.service.actions;
 
-import codecamp.bug.wars.game.logic.models.Map;
+import codecamp.bug.wars.game.logic.models.GameState;
 import codecamp.bug.wars.game.logic.models.MapSpace;
 import codecamp.bug.wars.game.logic.service.engine.BugExecutor;
 import lombok.Data;
@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class MoveAction implements Action{
 
-    public void execute(BugExecutor bugExecutor, Map map) {
+    public void execute(BugExecutor bugExecutor, GameState gameState) {
         int targetX = bugExecutor.getStartingX();
         int targetY = bugExecutor.getStartingY();
 
@@ -26,7 +26,7 @@ public class MoveAction implements Action{
                 targetX = bugExecutor.getStartingX() - 1;
                 break;
         }
-        if(map.getSpace(targetX , targetY) != MapSpace.WALL){
+        if(gameState.isEmpty(targetX, targetY)){
             bugExecutor.setEndingX(targetX);
             bugExecutor.setEndingY(targetY);
         }

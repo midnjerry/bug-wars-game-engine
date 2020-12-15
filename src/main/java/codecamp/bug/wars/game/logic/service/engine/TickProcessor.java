@@ -11,8 +11,9 @@ public class TickProcessor {
             bug.setStartingX(bug.getEndingX());
             bug.setStartingY(bug.getEndingY());
             Action action = bug.getNextCommand();
-            action.execute(bug, gameState.getMap());
+            action.execute(bug, gameState);
         }
+        gameState.setTick(gameState.getTick() + 1);
         return gameState;
     }
 }

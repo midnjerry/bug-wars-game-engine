@@ -24,7 +24,7 @@ public class GameEngine {
         List<BugExecutor> currBugs = new ArrayList<>();
         res.setResult("WINNER");
         Spawn spawn;
-        GameState tempGS;
+        GameState gameState;
         int i = 1;
         List<Integer> winningTeams = new ArrayList<>();
 
@@ -54,9 +54,9 @@ public class GameEngine {
 
         // getting the gameStates
         while(i <= game.getTicks()){
-            tempGS = tickProcessor.processTick(new GameState(game.getMap(), i, currBugs, new ArrayList<>()));
-            currBugs = tempGS.getBugs();
-            res.getGameStates().add(tempGS);
+            gameState = tickProcessor.processTick(new GameState(i, game.getMap(), currBugs, new ArrayList<>()));
+            currBugs = gameState.getBugs();
+            res.getGameStates().add(gameState);
         }
 
         // checking if draw or winner

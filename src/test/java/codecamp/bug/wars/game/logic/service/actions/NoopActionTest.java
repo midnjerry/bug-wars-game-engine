@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,7 +32,7 @@ public class NoopActionTest {
         bug = new BugExecutor();
         moveAction = new MoveAction();
         noop = new NoopAction();
-        gameState = new GameState();
+        gameState = new GameState(1,map, Arrays.asList(bug), Collections.emptyList());
     }
 
     @Test
@@ -42,7 +43,7 @@ public class NoopActionTest {
         bug.setDirection(Direction.NORTH);
 
         // act
-        noop.execute(bug, map);
+        noop.execute(bug, gameState);
 
         // arrange
         assertEquals(1, bug.getStartingX());

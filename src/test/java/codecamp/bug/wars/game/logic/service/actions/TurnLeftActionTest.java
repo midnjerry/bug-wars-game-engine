@@ -14,6 +14,7 @@ class TurnLeftActionTest {
     TurnLeftAction turnLeftAction;
     Map map;
     BugExecutor bug;
+    GameState gameState;
 
     @BeforeEach
     public void setup() {
@@ -34,40 +35,41 @@ class TurnLeftActionTest {
         List<Spawn> spawns = Arrays.asList(new Spawn(1, 0, 1, Direction.NORTH));
         List<Food> food = Arrays.asList(new Food(1, 1));
         map = new Map(null, rows, spawns, food);
+        gameState = new GameState(1, map,  Arrays.asList(bug), food);
     }
 
     @Test
     public void execute_shouldMakeTheBugFaceEast() {
         bug.setDirection(Direction.SOUTH);
-        turnLeftAction.execute(bug, map);
+        turnLeftAction.execute(bug, gameState);
         assertEquals(Direction.EAST, bug.getDirection());
     }
 
     @Test
     public void execute_shouldMakeTheBugFaceSouth() {
         bug.setDirection(Direction.WEST);
-        turnLeftAction.execute(bug, map);
+        turnLeftAction.execute(bug, gameState);
         assertEquals(Direction.SOUTH, bug.getDirection());
     }
 
     @Test
     public void execute_shouldMakeTheBugFaceWest() {
         bug.setDirection(Direction.NORTH);
-        turnLeftAction.execute(bug, map);
+        turnLeftAction.execute(bug, gameState);
         assertEquals(Direction.WEST, bug.getDirection());
     }
 
     @Test
     public void execute_shouldMakeTheBugFaceNorth() {
         bug.setDirection(Direction.EAST);
-        turnLeftAction.execute(bug, map);
+        turnLeftAction.execute(bug, gameState);
         assertEquals(Direction.NORTH, bug.getDirection());
     }
 
     @Test
     public void execute_shouldNotChangeCoordinates(){
         bug.setDirection(Direction.EAST);
-        turnLeftAction.execute(bug, map);
+        turnLeftAction.execute(bug, gameState);
         assertEquals(1, bug.getEndingX());
         assertEquals(1, bug.getEndingY());
     }
