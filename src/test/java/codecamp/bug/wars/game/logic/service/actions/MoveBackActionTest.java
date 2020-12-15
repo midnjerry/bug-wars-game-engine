@@ -1,9 +1,6 @@
 package codecamp.bug.wars.game.logic.service.actions;
 
-import codecamp.bug.wars.game.logic.models.Direction;
-import codecamp.bug.wars.game.logic.models.Map;
-import codecamp.bug.wars.game.logic.models.MapSpace;
-import codecamp.bug.wars.game.logic.models.MapSpaceRow;
+import codecamp.bug.wars.game.logic.models.*;
 import codecamp.bug.wars.game.logic.service.engine.BugExecutor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
