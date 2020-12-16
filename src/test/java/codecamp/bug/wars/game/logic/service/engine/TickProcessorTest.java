@@ -32,7 +32,7 @@ public class TickProcessorTest {
         List<Integer> code = Arrays.asList(2, 2, 2, 2, 2, 2, 2, 2);
         bug1 = new BugExecutor(4, 4, 4, 4, Direction.NORTH, false, 1, code, 0);
         bug2 = new BugExecutor(3, 4, 3, 4, Direction.NORTH, false, 1, code, 0);
-        map = new Map(null, rows, spawns, food);
+        map = Map.builder().mapGrid(rows).foods(food).spawns(spawns).build();
         gameState = new GameState(1, map, Arrays.asList(bug1, bug2), food);
 
         tickProcessor = new TickProcessor();

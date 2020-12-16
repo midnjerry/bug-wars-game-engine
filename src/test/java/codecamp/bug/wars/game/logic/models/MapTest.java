@@ -22,7 +22,7 @@ class MapTest {
                 new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.WALL, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
                 new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.WALL, MapSpace.WALL))
         );
-        map = new Map(null, rows, null, null);
+        map = Map.builder().mapGrid(rows).build();
     };
 
     @Test

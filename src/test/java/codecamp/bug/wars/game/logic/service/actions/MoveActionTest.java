@@ -27,7 +27,7 @@ class MoveActionTest {
                 new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN))
         );
 
-        map = new Map(null, rows, null, null);
+        map = Map.builder().mapGrid(rows).build();
         bug = new BugExecutor();
         moveAction = new MoveAction();
         gameState = new GameState(1,map, Arrays.asList(bug), null);

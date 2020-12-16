@@ -36,7 +36,7 @@ class TurnRightActionTest {
 
         List<Spawn> spawns = Arrays.asList(new Spawn(1, 0, 1, Direction.NORTH));
         List<Food> food = Arrays.asList(new Food(1, 1));
-        map = new Map(null, rows, spawns, food);
+        map = Map.builder().mapGrid(rows).build();
         gameState = new GameState(1,map, Arrays.asList(bug), Collections.emptyList());
     }
 

@@ -26,7 +26,7 @@ class GameStateTest {
                 new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN))
         );
 
-        map = new Map(null, rows, null, null);
+        map = new Map(rows, null, null);
         List<Food> food = Arrays.asList(new Food(0, 0));
 
         bug = new BugExecutor();

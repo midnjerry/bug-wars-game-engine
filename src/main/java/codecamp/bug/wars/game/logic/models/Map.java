@@ -2,6 +2,7 @@ package codecamp.bug.wars.game.logic.models;
 
 import codecamp.bug.wars.game.logic.exceptions.InvalidInputException;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,20 +12,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Builder
 public class Map {
-
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToMany
     List<MapSpaceRow> mapGrid;
-
-    @ElementCollection
     List<Spawn> spawns;
-
-    @ElementCollection
     List<Food> foods;
 
     public MapSpace getSpace(int x, int y){

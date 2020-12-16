@@ -27,7 +27,7 @@ public class MoveBackActionTest {
                 new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.WALL, MapSpace.OPEN)),
                 new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN))
         );
-        map = new Map(null, rows, null, null);
+        map = Map.builder().mapGrid(rows).build();
         bug = new BugExecutor();
         moveBackAction = new MoveBackAction();
         gameState = new GameState(1,map, Arrays.asList(bug), null);

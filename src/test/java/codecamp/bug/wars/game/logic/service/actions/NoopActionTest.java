@@ -28,7 +28,7 @@ public class NoopActionTest {
                 new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.WALL, MapSpace.OPEN)),
                 new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN))
         );
-        map = new Map(null, rows, null, null);
+        map = Map.builder().mapGrid(rows).build();
         bug = new BugExecutor();
         moveAction = new MoveAction();
         noop = new NoopAction();
