@@ -12,10 +12,10 @@ import java.util.List;
 public class GameState {
     Integer tick;
     Map map;
-    List<BugExecutor> bugs;
+    List<BugResponse> bugs;
     List<Food> food;
 
-    public GameState(Integer tick, Map map, List<BugExecutor> bugs, List<Food> food) {
+    public GameState(Integer tick, Map map, List<BugResponse> bugs, List<Food> food) {
         this.tick = tick;
         this.map = map;
         this.bugs = bugs;
@@ -40,7 +40,7 @@ public class GameState {
             return false;
         }
 
-        for (BugExecutor bug : bugs) {
+        for (BugResponse bug : bugs) {
             if (bug.getEndingX() == targetX && bug.getEndingY() == targetY) {
                 return false;
             }

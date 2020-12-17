@@ -13,12 +13,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class TurnLeftActionTest {
     TurnLeftAction turnLeftAction;
     Map map;
-    BugExecutor bug;
+    BugResponse bug;
     GameState gameState;
 
     @BeforeEach
     public void setup() {
-        bug = new BugExecutor();
+        bug = new BugResponse();
         bug.setStartingX(1);
         bug.setStartingY(1);
         bug.setEndingX(1);
@@ -26,10 +26,10 @@ class TurnLeftActionTest {
 
         turnLeftAction = new TurnLeftAction();
 
-        List<MapSpaceRow> rows = Arrays.asList(
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN))
+        List<List<MapSpace>> rows = Arrays.asList(
+                (Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
+                (Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
+                (Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN))
         );
 
         List<Spawn> spawns = Arrays.asList(new Spawn(1, 0, 1, Direction.NORTH));

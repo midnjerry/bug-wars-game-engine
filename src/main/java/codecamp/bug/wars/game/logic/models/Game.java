@@ -17,9 +17,14 @@ public class Game {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
+    @Convert(converter = MapConverter.class)
+    @Column(columnDefinition="text")
     private Map map;
-    @OneToMany
+
+    @Convert(converter = BugInfosConverter.class)
+    @Column(columnDefinition="text")
     private List<BugInfo> bugInfos;
+
     private Integer ticks;
     private Long seed;
 }

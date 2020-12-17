@@ -16,36 +16,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class GameEngineTest {
 
     private Game game;
-    private GameResult sampleGameResult;
     private GameEngine gameEngine;
+    private GameBuilder gameBuilder;
     private TickProcessor tickProcessor;
 
     @BeforeEach
     public void setup() {
         tickProcessor = Mockito.mock(TickProcessor.class);
-
-        List<MapSpaceRow> rows = Arrays.asList(
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN))
-        );
-
-        List<Spawn> spawns = Arrays.asList(new Spawn(1, 0, 1, Direction.NORTH));
-        List<Food> food = Arrays.asList(new Food(1, 1));
-        Map map = Map.builder().mapGrid(rows).foods(food).spawns(spawns).build();
-        List<Integer> code = Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1);
-        List<BugInfo> bugInfos = Arrays.asList(new BugInfo(null, 1, code.toString()));
-        BugResponse bugResponse = new BugResponse(2, Direction.NORTH, 3, 4, "attack", false);
-//        GameState gameStateTest = new GameState(1, bugInfos);
-        List<Integer> winners = Arrays.asList(1, 2);
-
-//        List<GameState> gameStateArray = Arrays.asList(gameStateTest);
-        game = new Game(1L, map, bugInfos, 1, null);
-//        sampleGameResult = new GameResult(winners, "winner", gameStateArray);
         gameEngine = new GameEngine(tickProcessor);
-
+        gameBuilder = new GameBuilder();
+        game = gameBuilder.defaultGame().build();
     }
 
     @Test
@@ -68,6 +48,7 @@ class GameEngineTest {
         GameResult expected = new GameResult();
         expected.setResult("DRAW");
         expected.setWinners(Arrays.asList(1));
+        game.setBugInfos(Arrays.asList(game.getBugInfos().get(0)));
 
         // act
         GameResult actual = gameEngine.playGame(game);

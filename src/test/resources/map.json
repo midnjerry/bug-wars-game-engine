@@ -8,19 +8,19 @@
   ],
   "spawns": [
     {
-      "team": 1,
       "x": 0,
       "y": 0,
+      "team": 1,
       "direction": "NORTH"
     },
     {
-      "team": 2,
       "x": 4,
       "y": 4,
+      "team": 2,
       "direction": "NORTH"
     }
   ],
-  "food": [
+  "foods": [
     {
       "x": 2,
       "y": 2

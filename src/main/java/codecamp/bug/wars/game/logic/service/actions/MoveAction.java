@@ -1,34 +1,33 @@
 package codecamp.bug.wars.game.logic.service.actions;
 
+import codecamp.bug.wars.game.logic.models.BugResponse;
 import codecamp.bug.wars.game.logic.models.GameState;
-import codecamp.bug.wars.game.logic.models.MapSpace;
-import codecamp.bug.wars.game.logic.service.engine.BugExecutor;
 import lombok.Data;
 
 @Data
 public class MoveAction implements Action{
 
-    public void execute(BugExecutor bugExecutor, GameState gameState) {
-        int targetX = bugExecutor.getStartingX();
-        int targetY = bugExecutor.getStartingY();
+    public void execute(BugResponse bugResponse, GameState gameState) {
+        int targetX = bugResponse.getStartingX();
+        int targetY = bugResponse.getStartingY();
 
-        switch (bugExecutor.getDirection()) {
+        switch (bugResponse.getDirection()) {
             case NORTH:
-                targetY = bugExecutor.getStartingY() - 1;
+                targetY = bugResponse.getStartingY() - 1;
                 break;
             case EAST:
-                targetX = bugExecutor.getStartingX() + 1;
+                targetX = bugResponse.getStartingX() + 1;
                 break;
             case SOUTH:
-                targetY = bugExecutor.getStartingY() + 1;
+                targetY = bugResponse.getStartingY() + 1;
                 break;
             case WEST:
-                targetX = bugExecutor.getStartingX() - 1;
+                targetX = bugResponse.getStartingX() - 1;
                 break;
         }
         if(gameState.isEmpty(targetX, targetY)){
-            bugExecutor.setEndingX(targetX);
-            bugExecutor.setEndingY(targetY);
+            bugResponse.setEndingX(targetX);
+            bugResponse.setEndingY(targetY);
         }
     }
 }

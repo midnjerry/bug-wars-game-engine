@@ -24,13 +24,14 @@ public class GameEngine {
         List<BugExecutor> currBugs = new ArrayList<>();
         res.setResult("WINNER");
         Spawn spawn;
-        GameState gameState;
-        int i = 1;
+        List<BugResponse> resBugs = new ArrayList<>();
+        BugResponse resBug;
+        GameState gameState = new GameState(0, game.getMap(), null, null);
         List<Integer> winningTeams = new ArrayList<>();
+        Action tempAction;
+
 
         // TODO: add functionality to test if bugs are at same coords.
-//        String coordString;
-//        Set coordSet = new HashSet<>();
 
         // automatically setting result and winner if 0 or 1 bug
         if(game.getBugInfos().size() < 1){
@@ -45,22 +46,31 @@ public class GameEngine {
         res.setGameStates(new ArrayList<>());
 
         // creating bugExecutor for each bugInfo
+        // creating bugResponse for each bugInfo
         for(BugInfo bug : game.getBugInfos()){
             spawn = game.getMap().getSpawns().get(game.getMap().getSpawnIndex(bug.getTeam()));
-            currBugs.add(new BugExecutor(
-                    spawn.getX(), spawn.getY(), spawn.getX(), spawn.getY(), spawn.getDirection(),false,bug.getTeam(),bug.parseCode(),0
-            ));
+            currBugs.add(new BugExecutor(bug.getTeam(), bug.getCode(), 0));
+            resBugs.add(new BugResponse(bug.getTeam(), spawn.getX(), spawn.getY(), spawn.getX(), spawn.getY(), spawn.getDirection(), "NOOP", false));
         }
 
+        int counter = 0;
+
         // getting the gameStates
-        while(i <= game.getTicks()){
-            gameState = tickProcessor.processTick(new GameState(i, game.getMap(), currBugs, new ArrayList<>()));
-            currBugs = gameState.getBugs();
+        while(gameState.getTick() <= game.getTicks()){
+            for(BugResponse bug : resBugs){
+                BugExecutor bugEx = currBugs.get(counter);
+                tempAction = bugEx.getNextCommand();
+                tempAction.execute(bug, gameState);
+                counter++;
+            }
+            counter = 0;
+            gameState.setBugs(resBugs);
+            gameState.setTick(gameState.getTick()+1);
             res.getGameStates().add(gameState);
         }
 
         // checking if draw or winner
-        for(BugExecutor bug : currBugs){
+        for(BugResponse bug : gameState.getBugs()){
             if(winningTeams.contains(bug.getTeam())){
                 res.setResult("DRAW");
             }

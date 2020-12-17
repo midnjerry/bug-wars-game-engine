@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class Map {
-    List<MapSpaceRow> mapGrid;
+    List<List<MapSpace>> mapGrid;
     List<Spawn> spawns;
     List<Food> foods;
 
@@ -23,13 +23,13 @@ public class Map {
             return MapSpace.WALL;
         }
 
-       MapSpaceRow row = mapGrid.get(y);
+       List<MapSpace> row = mapGrid.get(y);
 
-        if (x >= row.getSpaces().size()){
+        if (x >= row.size()){
             return MapSpace.WALL;
         }
 
-        return row.getSpaces().get(x);
+        return row.get(x);
     }
 
     public int getSpawnIndex(int team) {

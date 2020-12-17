@@ -21,35 +21,22 @@ class GameEngineControllerTest {
     private GameLoader mockGameEngineService;
     private GameEngineController gameEngineController;
     private Game sampleGame;
+    private GameBuilder gameBuilder;
     private GameResult sampleGameResult;
 
     @BeforeEach
     public void setup() {
         mockGameEngineService = Mockito.mock(GameLoader.class);
         gameEngineController = new GameEngineController(mockGameEngineService);
+        gameBuilder = new GameBuilder();
+        sampleGame = gameBuilder.defaultGame().build();
 
-        List<MapSpaceRow> rows = Arrays.asList(
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN))
-        );
-
-        List<Spawn> spawns = Arrays.asList(new Spawn(1, 0, 1, Direction.NORTH));
-        List<Food> food = Arrays.asList(new Food(1, 1));
-        Map map = new Map(rows, spawns, food);
-        List<Integer> code = Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1);
-        List<BugInfo> bugInfos = Arrays.asList(new BugInfo(null,1, code.toString()));
-        BugResponse bugResponse = new BugResponse(2, Direction.NORTH, 3, 4, "attack", false);
-        GameState gameStateTest = new GameState(1,map,  null, food);
+        GameState gameStateTest = new GameState(1, sampleGame.getMap(),  null, sampleGame.getMap().getFoods());
         List<Integer> winners = Arrays.asList(1, 2);
-
         List<GameState> gameStateArray = Arrays.asList(gameStateTest);
-        sampleGame = new Game(1L, map, bugInfos, 1, null);
+
+        sampleGame = gameBuilder.defaultGame().build();
         sampleGameResult = new GameResult(winners, "winner", gameStateArray);
-
-
     }
 
     @Test

@@ -34,20 +34,20 @@ public class GameLoaderTest {
         gameEngine = Mockito.mock(GameEngine.class);
         mockGameLoader = new GameLoader(gameEngineMockRepository, gameEngine);
 
-        List<MapSpaceRow> rows = Arrays.asList(
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN))
+        List<List<MapSpace>> rows = Arrays.asList(
+                (Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
+                (Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
+                (Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
+                (Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
+                (Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN))
         );
 
         List<Spawn> spawns = Arrays.asList(new Spawn(1, 0, 1, Direction.NORTH));
         List<Food> food = Arrays.asList(new Food(1, 1));
         Map map = Map.builder().mapGrid(rows).foods(food).spawns(spawns).build();
         List<Integer> code = Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1);
-        List<BugInfo> bugInfos = Arrays.asList(new BugInfo(null, 1, code.toString()));
-        BugResponse bugResponse = new BugResponse(2, Direction.NORTH, 3, 4, "attack", false);
+        List<BugInfo> bugInfos = Arrays.asList(new BugInfo(1, code));
+        BugResponse bugResponse = new BugResponse();
         GameState gameStateTest = new GameState(1, map, null, food);
         List<Integer> winners = Arrays.asList(1, 2);
 

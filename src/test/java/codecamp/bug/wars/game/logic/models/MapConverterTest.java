@@ -25,11 +25,11 @@ class MapConverterTest {
     public void setup() {
         map = new Map(
                 Arrays.asList(
-                        new MapSpaceRow(Arrays.asList(OPEN, OPEN, OPEN, OPEN, OPEN)),
-                        new MapSpaceRow(Arrays.asList(OPEN, WALL, OPEN, WALL, OPEN)),
-                        new MapSpaceRow(Arrays.asList(OPEN, OPEN, OPEN, OPEN, OPEN)),
-                        new MapSpaceRow(Arrays.asList(OPEN, WALL, OPEN, WALL, OPEN)),
-                        new MapSpaceRow(Arrays.asList(OPEN, OPEN, OPEN, OPEN, OPEN))
+                        (Arrays.asList(OPEN, OPEN, OPEN, OPEN, OPEN)),
+                        (Arrays.asList(OPEN, WALL, OPEN, WALL, OPEN)),
+                        (Arrays.asList(OPEN, OPEN, OPEN, OPEN, OPEN)),
+                        (Arrays.asList(OPEN, WALL, OPEN, WALL, OPEN)),
+                        (Arrays.asList(OPEN, OPEN, OPEN, OPEN, OPEN))
                 ), Arrays.asList(
                 new Spawn(0, 0, 1, Direction.NORTH),
                 new Spawn(4, 4, 2, Direction.NORTH)),
@@ -52,7 +52,14 @@ class MapConverterTest {
 
     @Test
     public void convertToDatabaseColumn_TakesMapAndConvertsToJson() {
+        // arrange
+        String json = openResourceFile("map.json");
 
+        // act
+        String actual = mapConverter.convertToDatabaseColumn(map);
+
+        // assert
+        assertEquals(json.replaceAll("\\s+",""), actual);
     }
 
     @Test

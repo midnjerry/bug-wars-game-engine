@@ -15,12 +15,12 @@ class TurnRightActionTest {
 
     TurnRightAction turnRightAction;
     Map map;
-    BugExecutor bug;
+    BugResponse bug;
     GameState gameState;
 
     @BeforeEach
     public void setup() {
-        bug = new BugExecutor();
+        bug = new BugResponse();
         bug.setStartingX(1);
         bug.setStartingY(1);
         bug.setEndingX(1);
@@ -28,15 +28,14 @@ class TurnRightActionTest {
 
         turnRightAction = new TurnRightAction();
 
-        List<MapSpaceRow> rows = Arrays.asList(
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN))
+        List<List<MapSpace>> rows = Arrays.asList(
+                (Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
+                (Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
+                (Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN))
         );
 
-        List<Spawn> spawns = Arrays.asList(new Spawn(1, 0, 1, Direction.NORTH));
-        List<Food> food = Arrays.asList(new Food(1, 1));
         map = Map.builder().mapGrid(rows).build();
+
         gameState = new GameState(1,map, Arrays.asList(bug), Collections.emptyList());
     }
 

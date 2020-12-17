@@ -15,15 +15,15 @@ class MapTest {
 
     @BeforeEach
     public void setup(){
-        List<MapSpaceRow> rows = Arrays.asList(
-                new MapSpaceRow(Arrays.asList(MapSpace.WALL, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.WALL, MapSpace.OPEN, MapSpace.WALL)),
-                new MapSpaceRow(Arrays.asList(MapSpace.WALL, MapSpace.OPEN, MapSpace.OPEN, MapSpace.WALL, MapSpace.OPEN)),
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.WALL, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN)),
-                new MapSpaceRow(Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.WALL, MapSpace.WALL))
+        List<List<MapSpace>> mapGrid = Arrays.asList(
+                Arrays.asList(MapSpace.WALL, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN),
+                Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.WALL, MapSpace.OPEN, MapSpace.WALL),
+                Arrays.asList(MapSpace.WALL, MapSpace.OPEN, MapSpace.OPEN, MapSpace.WALL, MapSpace.OPEN),
+                Arrays.asList(MapSpace.OPEN, MapSpace.WALL, MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN),
+                Arrays.asList(MapSpace.OPEN, MapSpace.OPEN, MapSpace.OPEN, MapSpace.WALL, MapSpace.WALL)
         );
-        map = Map.builder().mapGrid(rows).build();
-    };
+        map = Map.builder().mapGrid(mapGrid).build();
+    }
 
     @Test
     public void getSpace_shouldReturnMapSpaceAtCoordinate(){
