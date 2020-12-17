@@ -4,6 +4,7 @@ import codecamp.bug.wars.game.logic.models.*;
 import codecamp.bug.wars.game.logic.repository.GameRepository;
 import codecamp.bug.wars.game.logic.service.actions.Action;
 import codecamp.bug.wars.game.logic.service.engine.BugExecutor;
+import codecamp.bug.wars.game.logic.service.engine.BugUpdater;
 import codecamp.bug.wars.game.logic.service.engine.TickProcessor;
 import org.springframework.stereotype.Service;
 
@@ -21,19 +22,17 @@ public class GameEngine {
 
     public GameResult playGame(Game game){
         GameResult res = new GameResult();
-        List<BugExecutor> currBugs = new ArrayList<>();
+        List<BugExecutor> bugExecutors = new ArrayList<>();
         res.setResult("WINNER");
-        Spawn spawn;
-        List<BugResponse> resBugs = new ArrayList<>();
-        BugResponse resBug;
-        GameState gameState = new GameState(0, game.getMap(), null, null);
+        List<BugResponse> bugResponses = new ArrayList<>();
         List<Integer> winningTeams = new ArrayList<>();
         Action tempAction;
+        res.setGameStates(new ArrayList<>());
+        BugUpdater bugUpdater = new BugUpdater();
 
+        GameState gameState = new GameState(0, game.getMap(), null, null);
 
-        // TODO: add functionality to test if bugs are at same coords.
-
-        // automatically setting result and winner if 0 or 1 bug
+        // determines winner if 1 or 0 bugs
         if(game.getBugInfos().size() < 1){
             res.setResult("DRAW");
             return res;
@@ -43,28 +42,15 @@ public class GameEngine {
             return res;
         }
 
-        res.setGameStates(new ArrayList<>());
-
-        // creating bugExecutor for each bugInfo
-        // creating bugResponse for each bugInfo
-        for(BugInfo bug : game.getBugInfos()){
-            spawn = game.getMap().getSpawns().get(game.getMap().getSpawnIndex(bug.getTeam()));
-            currBugs.add(new BugExecutor(bug.getTeam(), bug.getCode(), 0));
-            resBugs.add(new BugResponse(bug.getTeam(), spawn.getX(), spawn.getY(), spawn.getX(), spawn.getY(), spawn.getDirection(), "NOOP", false));
-        }
+        // creating bugResponse and bugExecutor for each bugInfo
+        game.createBugResponses();
+        game.createBugExecutors();
 
         int counter = 0;
 
         // getting the gameStates
         while(gameState.getTick() <= game.getTicks()){
-            for(BugResponse bug : resBugs){
-                BugExecutor bugEx = currBugs.get(counter);
-                tempAction = bugEx.getNextCommand();
-                tempAction.execute(bug, gameState);
-                counter++;
-            }
-            counter = 0;
-            gameState.setBugs(resBugs);
+            bugUpdater.updateBugs(bugResponses, bugExecutors, gameState);
             gameState.setTick(gameState.getTick()+1);
             res.getGameStates().add(gameState);
         }

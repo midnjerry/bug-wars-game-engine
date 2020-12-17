@@ -64,14 +64,24 @@ public class GameBuilder {
         );
         this.map = Map.builder().mapGrid(mapGrid).foods(food).spawns(spawns).build();
 
-        List<Integer> code = Arrays.asList(
-                0, 0, 0, 0, 0, 0, 0, 0
+        List<Integer> code1 = Arrays.asList(
+                1, 1, 1, 1, 1, 1, 1, 1
         );
+        List<Integer> code2 = Arrays.asList(
+                2, 2, 2, 2, 2, 2, 2, 2
+        );
+        List<Integer> code3 = Arrays.asList(
+                3, 3, 3, 3, 3, 3, 3, 3
+        );
+        List<Integer> code4 = Arrays.asList(
+                4, 4, 4, 4, 4, 4, 4, 4
+        );
+
         this.bugInfos = Arrays.asList(
-                new BugInfo(1, code),
-                new BugInfo(2, code),
-                new BugInfo(3, code),
-                new BugInfo(4, code)
+                new BugInfo(1, code1),
+                new BugInfo(2, code2),
+                new BugInfo(3, code3),
+                new BugInfo(4, code4)
         );
 
         ticks = 1;
