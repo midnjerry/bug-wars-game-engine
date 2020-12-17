@@ -16,15 +16,16 @@ import java.util.Map;
 @AllArgsConstructor
 @Data
 public class BugExecutor {
-    int startingX;
-    int startingY;
-    int EndingX;
-    int EndingY;
-    Direction direction;
-    boolean dying;
+//    int startingX;
+//    int startingY;
+//    int EndingX;
+//    int EndingY;
+//    Direction direction;
+//    boolean dying;
     int team;
     List<Integer> program;
     int programCounter;
+
     private static Map<Integer,Action> actionMap;
 
     static {

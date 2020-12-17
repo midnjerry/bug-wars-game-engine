@@ -1,5 +1,6 @@
 package codecamp.bug.wars.game.logic.models;
 
+import codecamp.bug.wars.game.logic.service.engine.BugExecutor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,22 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 public class BugInfo {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
     Integer team;
-
-    String code;
-
-    public List<Integer> parseCode(){
-        List<String> stringList = Arrays.asList(code.split(" "));
-        List<Integer> resList = new ArrayList<>();
-        for(String code : stringList){
-            resList.add(Integer.parseInt(code));
-        }
-        return resList;
-    }
+    List<Integer> code;
 }

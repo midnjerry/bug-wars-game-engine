@@ -1,0 +1,29 @@
+{
+  "mapGrid": [
+    ["OPEN","OPEN","OPEN","OPEN","OPEN"],
+    ["OPEN","WALL","OPEN","WALL","OPEN"],
+    ["OPEN","OPEN","OPEN","OPEN","OPEN"],
+    ["OPEN","WALL","OPEN","WALL","OPEN"],
+    ["OPEN","OPEN","OPEN","OPEN","OPEN"]
+  ],
+  "spawns": [
+    {
+      "x": 0,
+      "y": 0,
+      "team": 1,
+      "direction": "NORTH"
+    },
+    {
+      "x": 4,
+      "y": 4,
+      "team": 2,
+      "direction": "NORTH"
+    }
+  ],
+  "foods": [
+    {
+      "x": 2,
+      "y": 2
+    }
+  ]
+}

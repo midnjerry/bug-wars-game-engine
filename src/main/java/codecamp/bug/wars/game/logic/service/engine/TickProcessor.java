@@ -6,14 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TickProcessor {
-    public GameState processTick(GameState gameState) {
-        for(BugExecutor bug : gameState.getBugs()){
-            bug.setStartingX(bug.getEndingX());
-            bug.setStartingY(bug.getEndingY());
-            Action action = bug.getNextCommand();
-            action.execute(bug, gameState);
-        }
+    public void processTick(GameState gameState) {
         gameState.setTick(gameState.getTick() + 1);
-        return gameState;
     }
 }

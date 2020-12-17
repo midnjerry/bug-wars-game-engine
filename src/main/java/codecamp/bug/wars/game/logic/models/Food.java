@@ -9,7 +9,6 @@ import javax.persistence.Embeddable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Embeddable
 public class Food {
     Integer x;
     Integer y;

@@ -11,21 +11,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 public class MapSpaceRow {
 
-    public MapSpaceRow(List<MapSpace> spaces){
-        this(null, spaces);
-    }
-
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long id;
-
-    @ElementCollection
-    @JoinTable(joinColumns = @JoinColumn(name = "id"))
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     List<MapSpace> spaces;
 
 }
