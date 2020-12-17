@@ -2,6 +2,7 @@ package codecamp.bug.wars.game.logic.service;
 
 
 import codecamp.bug.wars.game.logic.models.*;
+import codecamp.bug.wars.game.logic.service.engine.BugUpdater;
 import codecamp.bug.wars.game.logic.service.engine.TickProcessor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,12 +19,12 @@ class GameEngineTest {
     private Game game;
     private GameEngine gameEngine;
     private GameBuilder gameBuilder;
-    private TickProcessor tickProcessor;
+    private BugUpdater bugUpdater;
 
     @BeforeEach
     public void setup() {
-        tickProcessor = Mockito.mock(TickProcessor.class);
-        gameEngine = new GameEngine(tickProcessor);
+        bugUpdater = Mockito.mock(BugUpdater.class);
+        gameEngine = new GameEngine(bugUpdater);
         gameBuilder = new GameBuilder();
         game = gameBuilder.defaultGame().build();
     }
@@ -32,8 +33,7 @@ class GameEngineTest {
     public void playGame_NoBugsReturnsDrawResult() {
         // arrange
         game.setBugInfos(Collections.emptyList());
-        GameResult expected = new GameResult();
-        expected.setResult("DRAW");
+        GameResult expected = new GameResult(Collections.emptyList(), "DRAW", Collections.emptyList());
 
         // act
         GameResult actual = gameEngine.playGame(game);
@@ -45,9 +45,7 @@ class GameEngineTest {
     @Test
     public void playGame_OneBugReturnsDrawResultWithOneTeam() {
         // arrange
-        GameResult expected = new GameResult();
-        expected.setResult("DRAW");
-        expected.setWinners(Arrays.asList(1));
+        GameResult expected = new GameResult(Arrays.asList(1), "DRAW", Collections.emptyList());
         game.setBugInfos(Arrays.asList(game.getBugInfos().get(0)));
 
         // act

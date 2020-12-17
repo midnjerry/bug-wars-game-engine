@@ -11,4 +11,8 @@ public class NoopAction implements Action {
     public void execute(BugResponse bugResponse, GameState gameState) {
 
     }
+
+    public String toString(){
+        return "noop";
+    }
 }

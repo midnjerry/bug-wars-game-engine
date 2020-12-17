@@ -1,6 +1,7 @@
 package codecamp.bug.wars.game.logic.models;
 
 import codecamp.bug.wars.game.logic.service.engine.BugExecutor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -47,5 +48,18 @@ public class GameState {
         }
 
         return true;
+    }
+
+    public GameState clone() {
+        ObjectMapper mapper = new ObjectMapper();
+        GameState copy;
+
+        try {
+            copy = mapper.readValue(mapper.writeValueAsString(this), GameState.class);
+        } catch (Exception e) {
+            copy = new GameState();
+        }
+
+        return copy;
     }
 }

@@ -29,4 +29,8 @@ public class MoveBackAction implements Action{
             bugResponse.setEndingY(targetY);
         }
     }
+
+    public String toString(){
+        return "moveBack";
+    }
 }

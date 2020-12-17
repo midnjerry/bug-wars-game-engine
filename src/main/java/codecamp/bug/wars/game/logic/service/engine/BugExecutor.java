@@ -38,17 +38,21 @@ public class BugExecutor {
 
     public Action getNextCommand() {
         if(programCounter >= program.size()){
-            return new NoopAction();
+            programCounter = 0;
         }
+
         int objCode = program.get(programCounter);
         int counter = 0;
+
         while(objCode == 20 && counter<6){
             int targetIndex = program.get(programCounter+1);
             objCode = program.get(targetIndex);
             programCounter = targetIndex;
             counter ++;
         }
+
         Action action = actionMap.get(objCode);
+
         if(action == null){
             if(objCode != 20) {
                 programCounter++;
