@@ -26,4 +26,8 @@ public class TurnLeftAction implements Action{
                 break;
         }
     }
+
+    public String toString(){
+        return "turnLeft";
+    }
 }

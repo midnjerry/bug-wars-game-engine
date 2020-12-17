@@ -99,7 +99,7 @@ class GameTest {
                         game.getMap().getSpawns().get(0).getX(),
                         game.getMap().getSpawns().get(0).getY(),
                         game.getMap().getSpawns().get(0).getDirection(),
-                        null,
+                        "noop",
                         false
                 ),
                 new BugResponse(
@@ -108,7 +108,7 @@ class GameTest {
                         game.getMap().getSpawns().get(1).getX(),
                         game.getMap().getSpawns().get(1).getY(),
                         game.getMap().getSpawns().get(1).getDirection(),
-                        null,
+                        "noop",
                         false
                 ),
                 new BugResponse(
@@ -117,7 +117,7 @@ class GameTest {
                         game.getMap().getSpawns().get(2).getX(),
                         game.getMap().getSpawns().get(2).getY(),
                         game.getMap().getSpawns().get(2).getDirection(),
-                        null,
+                        "noop",
                         false
                 ),
                 new BugResponse(
@@ -126,7 +126,7 @@ class GameTest {
                         game.getMap().getSpawns().get(3).getX(),
                         game.getMap().getSpawns().get(3).getY(),
                         game.getMap().getSpawns().get(3).getDirection(),
-                        null,
+                        "noop",
                         false
                 )
         );

@@ -48,6 +48,10 @@ public class Game {
         List<BugResponse> res = new ArrayList<>();
         Spawn bugSpawn;
 
+        if(bugInfos == null || bugInfos.isEmpty()){
+            return res;
+        }
+
         for(BugInfo bug : bugInfos){
             bugSpawn = map.getSpawns().get(map.getSpawnIndex(bug.getTeam()));
 
@@ -58,7 +62,7 @@ public class Game {
                     bugSpawn.getX(),
                     bugSpawn.getY(),
                     bugSpawn.getDirection(),
-                    null,
+                    "noop",
                     false
             ));
         }

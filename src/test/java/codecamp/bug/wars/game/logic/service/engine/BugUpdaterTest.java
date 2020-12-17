@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BugUpdaterTest {
     BugUpdater bugUpdater;
-    List<BugResponse> bugResponses;
     List<BugExecutor> bugExecutors;
     GameState gameState;
 
@@ -27,10 +26,9 @@ class BugUpdaterTest {
         Game game = gameBuilder.defaultGame().build();
 
         gameState = new GameState(
-                1, game.getMap(), new ArrayList<>(), new ArrayList<>()
+                1, game.getMap(), game.createBugResponses(), new ArrayList<>()
         );
 
-        bugResponses = game.createBugResponses();
         bugExecutors = game.createBugExecutors();
     }
 
@@ -38,28 +36,28 @@ class BugUpdaterTest {
     void updateBugs_shouldReturnUpdatedBugResponses() {
         // arrange
         ObjectMapper objectMapper = new ObjectMapper();
-        List<BugResponse> expected = new ArrayList<>();
+        List<BugResponse> expected;
 
         try {
             expected = Arrays.asList(objectMapper
-                    .readValue(objectMapper.writeValueAsString(bugResponses), BugResponse[].class));
+                    .readValue(objectMapper.writeValueAsString(gameState.getBugs()), BugResponse[].class));
 
         } catch (Exception e) {
             expected = null;
         }
 
-        expected.get(0).setCommand("NoopAction()");
+        expected.get(0).setCommand("noop");
         expected.get(1).setEndingY(1);
-        expected.get(1).setCommand("MoveAction()");
+        expected.get(1).setCommand("move");
         expected.get(2).setDirection(Direction.WEST);
-        expected.get(2).setCommand("TurnLeftAction()");
+        expected.get(2).setCommand("turnLeft");
         expected.get(3).setDirection(Direction.EAST);
-        expected.get(3).setCommand("TurnRightAction()");
+        expected.get(3).setCommand("turnRight");
 
         // act
-        bugUpdater.updateBugs(bugResponses, bugExecutors, gameState);
+        bugUpdater.updateBugs(bugExecutors, gameState);
 
         // assert
-        assertEquals(expected, bugResponses);
+        assertEquals(expected, gameState.getBugs());
     }
 }

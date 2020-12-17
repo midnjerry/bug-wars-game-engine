@@ -9,11 +9,13 @@ import java.util.List;
 
 @Service
 public class BugUpdater {
-    public void updateBugs(List<BugResponse> bugResponses, List<BugExecutor> bugExecutors, GameState gameState){
+    public void updateBugs(List<BugExecutor> bugExecutors, GameState gameState){
         int counter = 0;
         Action action;
 
-        for(BugResponse bug : bugResponses){
+        for(BugResponse bug : gameState.getBugs()){
+            bug.setStartingX(bug.getEndingX());
+            bug.setStartingY(bug.getEndingY());
             action = bugExecutors.get(counter).getNextCommand();
             bug.setCommand(action.toString());
             action.execute(bug, gameState);

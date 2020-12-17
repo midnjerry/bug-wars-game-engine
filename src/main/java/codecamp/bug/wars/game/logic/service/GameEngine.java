@@ -1,71 +1,54 @@
 package codecamp.bug.wars.game.logic.service;
 
 import codecamp.bug.wars.game.logic.models.*;
-import codecamp.bug.wars.game.logic.repository.GameRepository;
-import codecamp.bug.wars.game.logic.service.actions.Action;
 import codecamp.bug.wars.game.logic.service.engine.BugExecutor;
 import codecamp.bug.wars.game.logic.service.engine.BugUpdater;
-import codecamp.bug.wars.game.logic.service.engine.TickProcessor;
 import org.springframework.stereotype.Service;
-
-import java.lang.reflect.Array;
 import java.util.*;
-import java.util.Map;
 
 @Service
 public class GameEngine {
-    private final TickProcessor tickProcessor;
+    BugUpdater bugUpdater;
 
-    public GameEngine(TickProcessor tickProcessor) {
-        this.tickProcessor = new TickProcessor();
+    GameEngine(BugUpdater bugUpdater){
+        this.bugUpdater = bugUpdater;
     }
 
     public GameResult playGame(Game game){
-        GameResult res = new GameResult();
-        List<BugExecutor> bugExecutors = new ArrayList<>();
-        res.setResult("WINNER");
-        List<BugResponse> bugResponses = new ArrayList<>();
-        List<Integer> winningTeams = new ArrayList<>();
-        Action tempAction;
-        res.setGameStates(new ArrayList<>());
-        BugUpdater bugUpdater = new BugUpdater();
-
-        GameState gameState = new GameState(0, game.getMap(), null, null);
+        GameResult res = new GameResult(new ArrayList<>(), "DRAW", new ArrayList<>());
 
         // determines winner if 1 or 0 bugs
         if(game.getBugInfos().size() < 1){
-            res.setResult("DRAW");
             return res;
         } else if(game.getBugInfos().size() < 2) {
-            res.setResult("DRAW");
             res.setWinners(Arrays.asList(game.getBugInfos().get(0).getTeam()));
             return res;
         }
 
         // creating bugResponse and bugExecutor for each bugInfo
-        game.createBugResponses();
-        game.createBugExecutors();
-
-        int counter = 0;
+        List<BugExecutor> bugExecutors  = game.createBugExecutors();
+        GameState gameState = new GameState(1, game.getMap(), null, null);
+        gameState.setBugs(game.createBugResponses());
+        res.getGameStates().add(gameState);
 
         // getting the gameStates
         while(gameState.getTick() <= game.getTicks()){
-            bugUpdater.updateBugs(bugResponses, bugExecutors, gameState);
+            gameState = gameState.clone();
+            bugUpdater.updateBugs(bugExecutors, gameState);
             gameState.setTick(gameState.getTick()+1);
             res.getGameStates().add(gameState);
         }
 
-        // checking if draw or winner
+        // adding winners to list
         for(BugResponse bug : gameState.getBugs()){
-            if(winningTeams.contains(bug.getTeam())){
-                res.setResult("DRAW");
-            }
-            else {
-                winningTeams.add(bug.getTeam());
-            }
+            res.getWinners().add(bug.getTeam());
         }
 
-        res.setWinners(winningTeams);
+        // determine result
+        if(res.getWinners().size() == 1){
+            res.setResult("WINNER");
+        }
+
         return res;
     }
 }

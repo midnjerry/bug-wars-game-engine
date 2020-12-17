@@ -38,6 +38,8 @@ class MoveActionTest {
         // arrange
         bug.setStartingX(1);
         bug.setStartingY(2);
+        bug.setEndingX(1);
+        bug.setEndingY(2);
         bug.setDirection(Direction.NORTH);
 
         // act
@@ -66,6 +68,8 @@ class MoveActionTest {
         // arrange
         bug.setStartingX(2);
         bug.setStartingY(1);
+        bug.setEndingX(2);
+        bug.setEndingY(1);
         bug.setDirection(Direction.WEST);
 
         // act
@@ -93,6 +97,8 @@ class MoveActionTest {
         // arrange
         bug.setStartingX(1);
         bug.setStartingY(1);
+        bug.setEndingX(1);
+        bug.setEndingY(1);
         bug.setDirection(Direction.EAST);
 
         // act
@@ -120,6 +126,8 @@ class MoveActionTest {
         // arrange
         bug.setStartingX(1);
         bug.setStartingY(1);
+        bug.setEndingX(1);
+        bug.setEndingY(1);
         bug.setDirection(Direction.SOUTH);
 
         // act

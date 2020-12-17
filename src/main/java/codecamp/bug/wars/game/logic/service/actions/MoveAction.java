@@ -30,4 +30,8 @@ public class MoveAction implements Action{
             bugResponse.setEndingY(targetY);
         }
     }
+
+    public String toString(){
+        return "move";
+    }
 }
